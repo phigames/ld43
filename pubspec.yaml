@@ -1,0 +1,15 @@
+name: ld43
+description: A simple StageXL web app.
+# version: 1.0.0
+#homepage: https://www.example.com
+#author: Andreas Säuberli <email@example.com>
+
+environment:
+  sdk: '>=2.0.0 <3.0.0'
+
+dependencies:
+  stagexl: ^1.1.0
+
+dev_dependencies:
+  build_runner: ^0.10.0
+  build_web_compilers: ^0.4.0
