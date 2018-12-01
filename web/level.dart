@@ -2,28 +2,31 @@ part of ld43;
 
 class Level {
 
-  final int FIELD_X = 1, FIELD_Y = 1;
-  final int BOMB_X = 7, BOMB_Y = 9;
+  final int FIELD_X = 1, FIELD_Y = 3;
+  final int BOMB_X = 7, BOMB_Y = 11;
 
   int width, height;
   int exitX, exitY;
   List<Car> cars;
+  String tutorialText;
+  bool won;
   Sprite sprite, fieldSprite, bombSprite;
 
-  Level.empty(this.width, this.height) {
+  Level.empty(this.width, this.height, [this.tutorialText = '']) {
     exitX = width;
     exitY = (height - 1) ~/ 2;
     cars = new List<Car>();
+    won = false;
     sprite = new Sprite()
       ..scaleX = 100 / (width + 2)
       ..scaleY = 100 / (height + 2);
     
     // border
     sprite.graphics.beginPath();
-    sprite.graphics.rect(0, 0, width + 2, 1); // top border
-    sprite.graphics.rect(0, height + 1, width + 2, 1); // bottom border
-    sprite.graphics.rect(0, 1, 1, height); // left border
-    sprite.graphics.rect(width + 1, 1, 1, height); // right border
+    sprite.graphics.rect(FIELD_X - 1, FIELD_Y - 1, width + 2, 1); // top border
+    sprite.graphics.rect(FIELD_X - 1, FIELD_Y + height, width + 2, 1); // bottom border
+    sprite.graphics.rect(FIELD_X - 1, FIELD_Y, 1, height); // left border
+    sprite.graphics.rect(FIELD_X + width, FIELD_Y, 1, height); // right border
     sprite.graphics.fillColor(Color.Blue);
 
     fieldSprite = new Sprite();
@@ -50,6 +53,14 @@ class Level {
     bombSprite.onMouseDown.listen((e) => _startBombDrag());
     bombSprite.onMouseUp.listen((e) => _stopBombDrag());
     sprite.addChild(bombSprite);
+    stage.addChild(
+      new TextField(tutorialText, new TextFormat('Share, sans-serif', 5, 0x000000, align: 'center', verticalAlign: 'bottom', leading: -3))
+        ..width = 100
+        ..height = 23
+        ..x = 0
+        ..y = 3
+        ..wordWrap = true
+    );
   }
 
   void addCar(int x, int y, Direction direction, int length, [bool player = false]) {
@@ -88,13 +99,16 @@ class Level {
   }
 
   void checkWon(Car car) {
-    if (car.player && car.occupies(exitX, exitY)) {
-      car.animateWon(onWon);
+    if (!won) {
+      if (car.player && car.occupies(exitX, exitY)) {
+        won = true;
+        car.animateWon(onWon);
+      }
     }
   }
 
   void onWon() {
-    print('won');
+    game.nextLevel();
   }
 
   void onLost() {

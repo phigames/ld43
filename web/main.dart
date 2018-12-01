@@ -16,7 +16,7 @@ Game game;
 Future<Null> main() async {
   html.CanvasElement canvas = html.querySelector('#stage');
   stage = new Stage(
-    canvas, width: 100, height: 120,
+    canvas, width: 100, height: 150,
     options: new StageOptions()
       ..backgroundColor = Color.White
       ..renderEngine = RenderEngine.WebGL
