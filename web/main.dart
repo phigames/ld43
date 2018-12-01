@@ -6,6 +6,7 @@ import 'package:stagexl/stagexl.dart';
 import 'dart:math';
 
 part 'level.dart';
+part 'leveltemplate.dart';
 
 Future<Null> main() async {
   var canvas = html.querySelector('#stage');
@@ -20,6 +21,6 @@ Future<Null> main() async {
   var resourceManager = new ResourceManager();
   //resourceManager.addBitmapData("dart", "images/dart@1x.png");
   await resourceManager.load();
-  Level level = new Level();
+  Level level = LevelTemplate.LVL_TEST.parse();
   stage.addChild(level.sprite);
 }

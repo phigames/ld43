@@ -6,7 +6,7 @@ class Level {
   List<Car> cars;
   Sprite sprite;
 
-  Level() {
+  Level.test() {
     width = 10;
     height = 10;
     cars = new List<Car>()
@@ -23,6 +23,24 @@ class Level {
     sprite.graphics.rect(0, 1, 1, height); // left border
     sprite.graphics.rect(width + 1, 1, 1, height); // right border
     sprite.graphics.fillColor(Color.Blue);
+  }
+
+  Level.empty(this.width, this.height) {
+    cars = new List<Car>();
+    sprite = new Sprite()
+      ..scaleX = 100 / (width + 2)
+      ..scaleY = 100 / (height + 2);
+    sprite.graphics.rect(0, 0, width + 2, 1); // top border
+    sprite.graphics.rect(0, height + 1, width + 2, 1); // bottom border
+    sprite.graphics.rect(0, 1, 1, height); // left border
+    sprite.graphics.rect(width + 1, 1, 1, height); // right border
+    sprite.graphics.fillColor(Color.Blue);
+  }
+
+  void addCar(int x, int y, Direction direction, int length) {
+    Car car = new Car(this, x, y, direction, length);
+    cars.add(car);
+    sprite.addChild(car.sprite);
   }
 
   bool isOccupied(int x, int y) {
