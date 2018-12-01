@@ -8,17 +8,20 @@ import 'dart:math';
 part 'level.dart';
 part 'leveltemplate.dart';
 
+Stage stage;
+
 Future<Null> main() async {
-  var canvas = html.querySelector('#stage');
-  var stage = new Stage(
+  html.CanvasElement canvas = html.querySelector('#stage');
+  stage = new Stage(
     canvas, width: 100, height: 100,
     options: new StageOptions()
       ..backgroundColor = Color.White
       ..renderEngine = RenderEngine.WebGL
+      ..inputEventMode = InputEventMode.MouseAndTouch
   );
-  var renderLoop = new RenderLoop();
+  RenderLoop renderLoop = new RenderLoop();
   renderLoop.addStage(stage);
-  var resourceManager = new ResourceManager();
+  ResourceManager resourceManager = new ResourceManager();
   //resourceManager.addBitmapData("dart", "images/dart@1x.png");
   await resourceManager.load();
   Level level = LevelTemplate.LVL_TEST.parse();

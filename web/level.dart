@@ -3,15 +3,18 @@ part of ld43;
 class Level {
 
   int width, height;
+  int exitX, exitY;
   List<Car> cars;
-  Sprite sprite;
+  Sprite sprite, fieldSprite;
 
   Level.test() {
     width = 10;
     height = 10;
+    exitX = width;
+    exitY = (height - 1) ~/ 2;
     cars = new List<Car>()
-      ..add(new Car(this, 1, 0, Direction.vertical, 3))
-      ..add(new Car(this, 3, 3, Direction.horizontal, 2));
+      ..add(new Car(this, 1, 0, Direction.vertical, 3, false))
+      ..add(new Car(this, 3, 3, Direction.horizontal, 2, true));
     sprite = new Sprite()
       ..scaleX = 100 / (width + 2)
       ..scaleY = 100 / (height + 2);
@@ -23,28 +26,39 @@ class Level {
     sprite.graphics.rect(0, 1, 1, height); // left border
     sprite.graphics.rect(width + 1, 1, 1, height); // right border
     sprite.graphics.fillColor(Color.Blue);
+    sprite.graphics.rect(exitX, exitY, 1, 1);
+    sprite.graphics.fillColor(Color.Green);
   }
 
   Level.empty(this.width, this.height) {
+    exitX = width;
+    exitY = (height - 1) ~/ 2;
     cars = new List<Car>();
     sprite = new Sprite()
       ..scaleX = 100 / (width + 2)
       ..scaleY = 100 / (height + 2);
+    sprite.graphics.beginPath();
     sprite.graphics.rect(0, 0, width + 2, 1); // top border
     sprite.graphics.rect(0, height + 1, width + 2, 1); // bottom border
     sprite.graphics.rect(0, 1, 1, height); // left border
     sprite.graphics.rect(width + 1, 1, 1, height); // right border
     sprite.graphics.fillColor(Color.Blue);
+    sprite.graphics.beginPath();
+    fieldSprite = new Sprite();
+    fieldSprite.graphics.rect(exitX, exitY, 1, 1);
+    fieldSprite.graphics.fillColor(Color.Green);
+    fieldSprite.x = fieldSprite.y = 1;
+    sprite.addChild(fieldSprite);
   }
 
-  void addCar(int x, int y, Direction direction, int length) {
-    Car car = new Car(this, x, y, direction, length);
+  void addCar(int x, int y, Direction direction, int length, [bool player = false]) {
+    Car car = new Car(this, x, y, direction, length, player);
     cars.add(car);
-    sprite.addChild(car.sprite);
+    fieldSprite.addChild(car.sprite);
   }
 
   bool isOccupied(int x, int y) {
-    if (x < 0 || x >= width || y < 0 || y >= height) {
+    if ((x != exitX && y != exitY) && (x < 0 || x >= width || y < 0 || y >= height)) {
       return true;
     }
     for (Car car in cars) {
@@ -55,6 +69,12 @@ class Level {
     return false;
   }
 
+  void checkWon(Car car) {
+    if (car.occupies(exitX, exitY)) {
+      car.animateWon();
+    }
+  }
+
 }
 
 class Car {
@@ -63,29 +83,37 @@ class Car {
   int x, y;
   Direction direction;
   int length;
+  bool player;
   double _dragStart;
   Sprite sprite;
 
-  Car(this._level, this.x, this.y, this.direction, this.length) {
+  Car(this._level, this.x, this.y, this.direction, this.length, this.player) {
     sprite = new Sprite()
       ..graphics.rect(0, 0, getWidth(), getHeight())
-      ..graphics.fillColor(Color.Red);
+      ..graphics.fillColor(player ? Color.Red : Color.Gray);
     updateSprite();
     if (direction == Direction.horizontal) {
       sprite.onMouseDown.listen((e) => startDrag(e.localX));
+      sprite.onTouchBegin.listen((e) => startDrag(e.localX));
       sprite.onMouseMove.listen((e) => drag(e.localX));
+      sprite.onTouchMove.listen((e) => drag(e.localX));
       sprite.onMouseOut.listen((e) => drag(e.localX, true));
+      sprite.onTouchOut.listen((e) => drag(e.localX, true));
     } else {
       sprite.onMouseDown.listen((e) => startDrag(e.localY));
+      sprite.onTouchBegin.listen((e) => startDrag(e.localY));
       sprite.onMouseMove.listen((e) => drag(e.localY));
+      sprite.onTouchMove.listen((e) => drag(e.localY));
       sprite.onMouseOut.listen((e) => drag(e.localY, true));
+      sprite.onTouchOut.listen((e) => drag(e.localY, true));
     }
     sprite.onMouseUp.listen((e) => stopDrag());
+    sprite.onTouchEnd.listen((e) => stopDrag());
   }
 
   void updateSprite() {
-    sprite.x = getX();
-    sprite.y = getY();
+    sprite.x = x;
+    sprite.y = y;
   }
 
   void move(int amount) {
@@ -106,6 +134,15 @@ class Car {
       }
     }
     updateSprite();
+    _level.checkWon(this);
+  }
+
+  void animateWon() {
+    stage.juggler.add(
+      new Tween(sprite, 0.5, Transition.easeInOutQuadratic)
+        ..animate.x.by(5)
+        ..animate.alpha.to(0)
+    );
   }
 
   bool occupies(int x, int y) {
@@ -146,14 +183,6 @@ class Car {
         // }
       }
     }
-  }
-
-  int getX() {
-    return x + 1;
-  }
-
-  int getY() {
-    return y + 1;
   }
 
   int getWidth() {
