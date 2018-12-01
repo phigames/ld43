@@ -51,7 +51,9 @@ class Level {
     bombSprite.x = BOMB_X;
     bombSprite.y = BOMB_Y;
     bombSprite.onMouseDown.listen((e) => _startBombDrag());
+    bombSprite.onTouchBegin.listen((e) => _startBombDrag());
     bombSprite.onMouseUp.listen((e) => _stopBombDrag());
+    bombSprite.onTouchEnd.listen((e) => _stopBombDrag());
     sprite.addChild(bombSprite);
     stage.addChild(
       new TextField(tutorialText, new TextFormat('Share, sans-serif', 5, 0x000000, align: 'center', verticalAlign: 'bottom', leading: -3))

@@ -11708,20 +11708,25 @@
         t2 = R.MouseEvent;
         t1 = t1.on$1$1(0, "mouseDown", t2);
         t1._subscribe$3(H.functionTypeCheck(new Y.Level$empty_closure(this), {func: 1, ret: -1, args: [H.getTypeArgumentByIndex(t1, 0)]}), false, 0);
+        t1 = R.TouchEvent;
+        t3 = this.bombSprite.on$1$1(0, "touchBegin", t1);
+        t3._subscribe$3(H.functionTypeCheck(new Y.Level$empty_closure0(this), {func: 1, ret: -1, args: [H.getTypeArgumentByIndex(t3, 0)]}), false, 0);
         t2 = this.bombSprite.on$1$1(0, "mouseUp", t2);
-        t2._subscribe$3(H.functionTypeCheck(new Y.Level$empty_closure0(this), {func: 1, ret: -1, args: [H.getTypeArgumentByIndex(t2, 0)]}), false, 0);
+        t2._subscribe$3(H.functionTypeCheck(new Y.Level$empty_closure1(this), {func: 1, ret: -1, args: [H.getTypeArgumentByIndex(t2, 0)]}), false, 0);
+        t1 = this.bombSprite.on$1$1(0, "touchEnd", t1);
+        t1._subscribe$3(H.functionTypeCheck(new Y.Level$empty_closure2(this), {func: 1, ret: -1, args: [H.getTypeArgumentByIndex(t1, 0)]}), false, 0);
         this.sprite.addChild$1(this.bombSprite);
-        t2 = $.stage;
-        t1 = Y.TextField$(this.tutorialText, Y.TextFormat$("Share, sans-serif", 5, 0, "center", false, 0, null, 0, false, -3, 0, 0, 4278190080, 0, 0, false, "bottom", 400));
-        t1.set$width(0, 100);
-        t1._height = 23;
-        t3 = t1._refreshPending |= 3;
-        t1._x = 0;
-        t1._transformationMatrixRefresh = true;
-        t1._y = 3;
-        t1._wordWrap = true;
-        t1._refreshPending = t3 | 3;
-        t2.addChild$1(t1);
+        t1 = $.stage;
+        t2 = Y.TextField$(this.tutorialText, Y.TextFormat$("Share, sans-serif", 5, 0, "center", false, 0, null, 0, false, -3, 0, 0, 4278190080, 0, 0, false, "bottom", 400));
+        t2.set$width(0, 100);
+        t2._height = 23;
+        t3 = t2._refreshPending |= 3;
+        t2._x = 0;
+        t2._transformationMatrixRefresh = true;
+        t2._y = 3;
+        t2._wordWrap = true;
+        t2._refreshPending = t3 | 3;
+        t1.addChild$1(t2);
       },
       explodeCar$1: function(car) {
         var t1, t2, t3, t4;
@@ -11764,6 +11769,15 @@
         else
           t1.startLevel$0();
       }, "call$0", "get$onWon", 0, 0, 1],
+      _startBombDrag$0: function() {
+        var t1, t2;
+        t1 = $.stage.juggler.addTween$2(this.bombSprite, 0.1);
+        t2 = t1.get$animate(t1);
+        t2._tween._createTweenProperty$2(t2, 4)._targetValue = 1.2;
+        t1 = t1.get$animate(t1);
+        t1._tween._createTweenProperty$2(t1, 5)._targetValue = 1.2;
+        this.bombSprite.startDrag$1(true);
+      },
       _stopBombDrag$0: function() {
         var t1, t2, t3, dropPoint, dropCar, root, stage;
         t1 = this.fieldSprite;
@@ -11808,22 +11822,28 @@
     Level$empty_closure: {
       "^": "Closure:2;$this",
       call$1: function(e) {
-        var t1, t2, t3;
         H.interceptedTypeCheck(e, "$isMouseEvent");
-        t1 = this.$this;
-        t2 = $.stage.juggler.addTween$2(t1.bombSprite, 0.1);
-        t3 = t2.get$animate(t2);
-        t3._tween._createTweenProperty$2(t3, 4)._targetValue = 1.2;
-        t2 = t2.get$animate(t2);
-        t2._tween._createTweenProperty$2(t2, 5)._targetValue = 1.2;
-        t1.bombSprite.startDrag$1(true);
-        return;
+        return this.$this._startBombDrag$0();
       }
     },
     Level$empty_closure0: {
+      "^": "Closure:3;$this",
+      call$1: function(e) {
+        H.interceptedTypeCheck(e, "$isTouchEvent");
+        return this.$this._startBombDrag$0();
+      }
+    },
+    Level$empty_closure1: {
       "^": "Closure:2;$this",
       call$1: function(e) {
         H.interceptedTypeCheck(e, "$isMouseEvent");
+        return this.$this._stopBombDrag$0();
+      }
+    },
+    Level$empty_closure2: {
+      "^": "Closure:3;$this",
+      call$1: function(e) {
+        H.interceptedTypeCheck(e, "$isTouchEvent");
         return this.$this._stopBombDrag$0();
       }
     },
