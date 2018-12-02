@@ -2,8 +2,8 @@ part of ld43;
 
 class Level {
 
-  final int FIELD_X = 1, FIELD_Y = 3;
-  final int BOMB_X = 7, BOMB_Y = 11;
+  static final int FIELD_X = 1, FIELD_Y = 3;
+  static final int BOMB_X = 7, BOMB_Y = 11;
 
   int width, height;
   int exitX, exitY;
@@ -20,35 +20,68 @@ class Level {
     sprite = new Sprite()
       ..scaleX = 100 / (width + 2)
       ..scaleY = 100 / (height + 2);
-    
-    // border
-    sprite.graphics.beginPath();
-    sprite.graphics.rect(FIELD_X - 1, FIELD_Y - 1, width + 2, 1); // top border
-    sprite.graphics.rect(FIELD_X - 1, FIELD_Y + height, width + 2, 1); // bottom border
-    sprite.graphics.rect(FIELD_X - 1, FIELD_Y, 1, height); // left border
-    sprite.graphics.rect(FIELD_X + width, FIELD_Y, 1, height); // right border
-    sprite.graphics.fillColor(Color.Blue);
 
+    // field
     fieldSprite = new Sprite();
-    // background
     fieldSprite.graphics.beginPath();
     fieldSprite.graphics.rect(0, 0, width, height);
-    fieldSprite.graphics.fillColor(Color.White);
-    // exit
-    fieldSprite.graphics.beginPath();
-    fieldSprite.graphics.rect(exitX, exitY, 1, 1);
-    fieldSprite.graphics.fillColor(Color.Green);
+    fieldSprite.graphics.fillColor(0xFFCCCCCC);
+    fieldSprite.x = FIELD_X;
+    fieldSprite.y = FIELD_Y;
+    sprite.addChild(fieldSprite);
 
+    // exit
+    fieldSprite.addChild(
+      new Bitmap(resourceManager.getBitmapData('exit'))
+        ..x = exitX
+        ..y = exitY
+        ..width = 1
+        ..height = 1
+    );
+    
+    // border
+    for (int i = FIELD_X - 1; i <= FIELD_X + width; i++) {
+      sprite.addChild(
+        new Bitmap(resourceManager.getBitmapData('border'))
+          ..x = i
+          ..y = FIELD_Y - 1
+          ..width = 1
+          ..height = 1
+      );
+      sprite.addChild(
+        new Bitmap(resourceManager.getBitmapData('border'))
+          ..x = i
+          ..y = FIELD_Y + height
+          ..width = 1
+          ..height = 1
+      );
+    }
+    for (int j = FIELD_Y; j < FIELD_Y + height; j++) {
+      sprite.addChild(
+        new Bitmap(resourceManager.getBitmapData('border'))
+          ..x = FIELD_X - 1
+          ..y = j
+          ..width = 1
+          ..height = 1
+      );
+      if (j != FIELD_Y + exitY) {
+        sprite.addChild(
+          new Bitmap(resourceManager.getBitmapData('border'))
+            ..x = FIELD_X + width
+            ..y = j
+            ..width = 1
+            ..height = 1
+        );
+      }
+    }
+
+    // bomb
     bombSprite = new Sprite();
     bombSprite.addChild(
       new Bitmap(resourceManager.getBitmapData('grenade'))
         ..width = 1
         ..height = 1
     );
-
-    fieldSprite.x = FIELD_X;
-    fieldSprite.y = FIELD_Y;
-    sprite.addChild(fieldSprite);
     bombSprite.pivotX = bombSprite.pivotY = 0.5;
     bombSprite.x = BOMB_X;
     bombSprite.y = BOMB_Y;

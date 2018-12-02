@@ -20,7 +20,7 @@ Future<Null> main() async {
   stage = new Stage(
     canvas, width: 100, height: 150,
     options: new StageOptions()
-      ..backgroundColor = Color.White
+      ..backgroundColor = 0xFFCCCCCC
       ..renderEngine = RenderEngine.WebGL
       ..inputEventMode = InputEventMode.MouseAndTouch
   );
@@ -36,6 +36,8 @@ Future<Null> main() async {
     }
   }
   resourceManager.addBitmapData('grenade', 'res/images/grenade.png');
+  resourceManager.addBitmapData('border', 'res/images/border.png');
+  resourceManager.addBitmapData('exit', 'res/images/exit.png');
   await resourceManager.load();
   random = new Random();
   game = new Game();
