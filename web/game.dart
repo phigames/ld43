@@ -9,7 +9,7 @@ class Game {
   TextField destroyedNumberField, destroyedTextField;
 
   Game() {
-    levelNumber = 9;
+    levelNumber = 0;
     destroyedCount = 0;
   }
 

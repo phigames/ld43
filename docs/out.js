@@ -12920,7 +12920,7 @@
               C.JSArray_methods.add$1(t2, t1);
               $.random = C.C__JSRandom;
               t1 = new Y.Game();
-              t1.levelNumber = 9;
+              t1.levelNumber = 0;
               t1.destroyedCount = 0;
               $.game = t1;
               t1.startMenu$0();
