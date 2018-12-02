@@ -1477,7 +1477,7 @@
     },
     Primitives_dateNow: [function() {
       return Date.now();
-    }, "call$0", "_js_helper_Primitives_dateNow$closure", 0, 0, 50],
+    }, "call$0", "_js_helper_Primitives_dateNow$closure", 0, 0, 51],
     Primitives_initTicker: function() {
       var $window, performance;
       if ($.Primitives_timerFrequency != null)
@@ -2659,7 +2659,7 @@
       }
     },
     Primitives_initTicker_closure: {
-      "^": "Closure:48;performance",
+      "^": "Closure:47;performance",
       call$0: function() {
         return C.JSNumber_methods.floor$0(1000 * this.performance.now());
       }
@@ -3228,13 +3228,13 @@
       }
     },
     initHooks_closure0: {
-      "^": "Closure:35;getUnknownTag",
+      "^": "Closure:32;getUnknownTag",
       call$2: function(o, tag) {
         return this.getUnknownTag(o, tag);
       }
     },
     initHooks_closure1: {
-      "^": "Closure:34;prototypeForTag",
+      "^": "Closure:46;prototypeForTag",
       call$1: function(tag) {
         return this.prototypeForTag(H.stringTypeCheck(tag));
       }
@@ -3926,7 +3926,7 @@
       }
     },
     _AsyncRun__initializeScheduleImmediate_closure: {
-      "^": "Closure:46;_box_0,div,span",
+      "^": "Closure:35;_box_0,div,span",
       call$1: function(callback) {
         var t1, t2;
         this._box_0.storedCallback = H.functionTypeCheck(callback, {func: 1, ret: -1});
@@ -4023,13 +4023,13 @@
       }
     },
     _awaitOnObject_closure0: {
-      "^": "Closure:31;bodyFunction",
+      "^": "Closure:53;bodyFunction",
       call$2: function(error, stackTrace) {
         this.bodyFunction.call$2(1, new H.ExceptionAndStackTrace(error, H.interceptedTypeCheck(stackTrace, "$isStackTrace")));
       }
     },
     _wrapJsFunctionForAsync_closure: {
-      "^": "Closure:32;$protected",
+      "^": "Closure:31;$protected",
       call$2: function(errorCode, result) {
         this.$protected(H.intTypeCheck(errorCode), result);
       }
@@ -5544,7 +5544,7 @@
       }
     },
     Duration_toString_sixDigits: {
-      "^": "Closure:13;",
+      "^": "Closure:14;",
       call$1: function(n) {
         if (n >= 100000)
           return "" + n;
@@ -5560,7 +5560,7 @@
       }
     },
     Duration_toString_twoDigits: {
-      "^": "Closure:13;",
+      "^": "Closure:14;",
       call$1: function(n) {
         if (n >= 10)
           return "" + n;
@@ -6321,7 +6321,7 @@
       "%": "XMLHttpRequest"
     },
     HttpRequest_request_closure: {
-      "^": "Closure:47;xhr,completer",
+      "^": "Closure:20;xhr,completer",
       call$1: function(e) {
         var t1, t2, accepted, unknownRedirect, t3;
         H.interceptedTypeCheck(e, "$isProgressEvent");
@@ -6652,7 +6652,7 @@
       }
     },
     _EventStreamSubscription_closure: {
-      "^": "Closure:20;onData",
+      "^": "Closure:49;onData",
       call$1: function(e) {
         return this.onData.call$1(H.interceptedTypeCheck(e, "$isEvent0"));
       }
@@ -6864,7 +6864,7 @@
       }
     },
     _AcceptStructuredClone_walk_closure: {
-      "^": "Closure:49;_box_0,$this",
+      "^": "Closure:50;_box_0,$this",
       call$2: function(key, value) {
         var t1, t2;
         t1 = this._box_0.copy;
@@ -7121,6 +7121,9 @@
       start$3: function(receiver, when, grainOffset, grainDuration) {
         return receiver.start(when, grainOffset, grainDuration);
       },
+      start$2: function($receiver, when, grainOffset) {
+        return $receiver.start(when, grainOffset);
+      },
       $isAudioBufferSourceNode: 1,
       "%": "AudioBufferSourceNode"
     },
@@ -7151,7 +7154,7 @@
       "%": "AudioContext|webkitAudioContext"
     },
     AudioContext_decodeAudioData_closure: {
-      "^": "Closure:51;completer",
+      "^": "Closure:52;completer",
       call$1: function(value) {
         this.completer.complete$1(0, H.interceptedTypeCheck(value, "$isAudioBuffer"));
       }
@@ -8983,20 +8986,20 @@
       }
     },
     Stage__startDrag_closure: {
-      "^": "Closure:14;touchPointID,sprite",
+      "^": "Closure:15;touchPointID,sprite",
       call$1: function(d) {
         H.interceptedTypeCheck(d, "$is_Drag");
         return d.touchPointID === this.touchPointID || d.sprite === this.sprite;
       }
     },
     Stage__stopDrag_closure: {
-      "^": "Closure:14;sprite",
+      "^": "Closure:15;sprite",
       call$1: function(d) {
         return H.interceptedTypeCheck(d, "$is_Drag").sprite === this.sprite;
       }
     },
     Stage__onMouseEvent_closure: {
-      "^": "Closure:15;stagePoint",
+      "^": "Closure:16;stagePoint",
       call$1: function(d) {
         return H.interceptedTypeCheck(d, "$is_Drag").update$2(0, this.stagePoint);
       }
@@ -9013,7 +9016,7 @@
       }
     },
     Stage__onTouchEvent_closure0: {
-      "^": "Closure:15;touchPointID,stagePoint",
+      "^": "Closure:16;touchPointID,stagePoint",
       call$1: function(d) {
         return H.interceptedTypeCheck(d, "$is_Drag").update$2(this.touchPointID, this.stagePoint);
       }
@@ -9137,7 +9140,7 @@
           }
           C.JSArray_methods.add$1(t4, L.RenderTextureQuad$(t2, new U.Rectangle0(newSourceL, newSourceT, newSourceR - newSourceL, newSourceB - newSourceT, t3), new U.Rectangle0(newOffsetL, newOffsetT, t10, t11, t3), newRotation, t6));
         }
-      }, "call$1", "get$_calculateGlyphs", 4, 0, 52]
+      }, "call$1", "get$_calculateGlyphs", 4, 0, 34]
     },
     StageOptions: {
       "^": "Object;renderEngine,inputEventMode,stageRenderMode,stageScaleMode,stageAlign,backgroundColor,transparent,antialias,maxPixelRatio,preventDefaultOnTouch,preventDefaultOnMouse,preventDefaultOnWheel,preventDefaultOnKeyboard"
@@ -10078,7 +10081,7 @@
         H.interceptedTypeCheck(contextEvent, "$isContextEvent").preventDefault();
         this._contextValid = false;
         this._contextLostEvent.add$1(0, new L.RenderContextEvent());
-      }, "call$1", "get$_onContextLost", 4, 0, 16],
+      }, "call$1", "get$_onContextLost", 4, 0, 13],
       _onContextRestored$1: [function(contextEvent) {
         var t1;
         H.interceptedTypeCheck(contextEvent, "$isContextEvent");
@@ -10087,7 +10090,7 @@
         $.RenderContextWebGL__globalContextIdentifier = t1;
         this._contextIdentifier = t1;
         this._contextRestoredEvent.add$1(0, new L.RenderContextEvent());
-      }, "call$1", "get$_onContextRestored", 4, 0, 16]
+      }, "call$1", "get$_onContextRestored", 4, 0, 13]
     },
     RenderFilter: {
       "^": "Object;"
@@ -11663,11 +11666,15 @@
         t1._soundTransform = new E.SoundTransform(1, 0);
         t1._audioElementSound = this;
         t1._media$_duration = duration;
+        t1._loop = loop;
         this._requestAudioElement$1(t1).then$1$1(t1.get$_onAudioElement(), -1);
         return t1;
       },
       play$0: function($receiver) {
         return this.play$2($receiver, false, null);
+      },
+      play$1: function($receiver, loop) {
+        return this.play$2($receiver, loop, null);
       },
       _requestAudioElement$1: function(soundChannel) {
         var $async$goto = 0,
@@ -11723,7 +11730,8 @@
       _onAudioEnded$1: [function($event) {
         var soundChannel = this._soundChannels.$index(0, J.get$target$x($event));
         if (soundChannel != null)
-          soundChannel.stop$0(0);
+          if (!soundChannel._loop)
+            soundChannel.stop$0(0);
       }, "call$1", "get$_onAudioEnded", 4, 0, 4],
       static: {
         AudioElementSound_load: function(url, soundLoadOptions) {
@@ -11886,7 +11894,14 @@
       },
       _onCompleteTimer$0: [function() {
         if (!this._paused)
-          this.stop$0(0);
+          if (this._loop) {
+            var t1 = this._audioElement;
+            t1.currentTime = this._startTime;
+            t1.toString;
+            W.promiseToFuture(t1.play(), null);
+            this._startCompleteTimer$1(this._media$_duration);
+          } else
+            this.stop$0(0);
       }, "call$0", "get$_onCompleteTimer", 0, 0, 1],
       _onVolumeChanged$1: [function(volume) {
         var t1, t2;
@@ -11907,10 +11922,14 @@
         var t1 = new E.MockSoundChannel(false, false, false, 0, 0, 0);
         t1._mockSound = this;
         t1._soundTransform = new E.SoundTransform(1, 0);
+        t1._loop = loop;
         return t1;
       },
       play$0: function($receiver) {
         return this.play$2($receiver, false, null);
+      },
+      play$1: function($receiver, loop) {
+        return this.play$2($receiver, loop, null);
       }
     },
     MockSoundChannel: {
@@ -11946,6 +11965,7 @@
         t3._webAudioApiSound = this;
         t2.toString;
         t3._media$_duration = t2;
+        t3._loop = loop;
         t4 = E.WebAudioApiMixer$($.SoundMixer__webAudioApiMixer._volumeNode);
         t3._mixer = t4;
         t5 = $.$get$WebAudioApiMixer_audioContext();
@@ -11953,24 +11973,43 @@
         value = Math.pow(1, 2);
         t6 = t4._volumeNode.gain;
         (t6 && C.AudioParam_methods).setValueAtTime$2(t6, value, time);
-        t3._paused = false;
-        t6 = t5.createBufferSource();
-        t3._sourceNode = t6;
-        t6.buffer = t1;
-        t6.loop = false;
-        (t6 && C.AudioBufferSourceNode_methods)._connect$3(t6, t4._volumeNode, 0, 0);
-        C.AudioBufferSourceNode_methods.start$3(t6, 0, 0, t2 - 0);
-        t2 = W.Event0;
-        t3.set$_sourceNodeEndedSubscription(W._EventStreamSubscription$(t6, "ended", H.functionTypeCheck(t3.get$_onEnded(), {func: 1, ret: -1, args: [t2]}), false, t2));
-        t5 = t5.currentTime;
-        t2 = t3._media$_position;
-        if (typeof t5 !== "number")
-          return t5.$sub();
-        t3._timeOffset = t5 - t2;
+        if (loop) {
+          t3._paused = false;
+          t6 = t5.createBufferSource();
+          t3._sourceNode = t6;
+          t6.buffer = t1;
+          t6.loop = true;
+          t6.loopStart = 0;
+          t6.loopEnd = 0 + t2;
+          (t6 && C.AudioBufferSourceNode_methods)._connect$3(t6, t4._volumeNode, 0, 0);
+          C.AudioBufferSourceNode_methods.start$2(t6, 0, 0);
+          t5 = t5.currentTime;
+          if (typeof t5 !== "number")
+            return t5.$sub();
+          t3._timeOffset = t5 - 0;
+        } else {
+          t3._paused = false;
+          t6 = t5.createBufferSource();
+          t3._sourceNode = t6;
+          t6.buffer = t1;
+          t6.loop = false;
+          (t6 && C.AudioBufferSourceNode_methods)._connect$3(t6, t4._volumeNode, 0, 0);
+          C.AudioBufferSourceNode_methods.start$3(t6, 0, 0, t2 - 0);
+          t2 = W.Event0;
+          t3.set$_sourceNodeEndedSubscription(W._EventStreamSubscription$(t6, "ended", H.functionTypeCheck(t3.get$_onEnded(), {func: 1, ret: -1, args: [t2]}), false, t2));
+          t5 = t5.currentTime;
+          t2 = t3._media$_position;
+          if (typeof t5 !== "number")
+            return t5.$sub();
+          t3._timeOffset = t5 - t2;
+        }
         return t3;
       },
       play$0: function($receiver) {
         return this.play$2($receiver, false, null);
+      },
+      play$1: function($receiver, loop) {
+        return this.play$2($receiver, loop, null);
       },
       static: {
         WebAudioApiSound_load: function(url, soundLoadOptions) {
@@ -12070,7 +12109,7 @@
         this._sourceNodeEndedSubscription = H.assertSubtype(_sourceNodeEndedSubscription, "$isStreamSubscription", [W.Event0], "$asStreamSubscription");
       },
       get$position: function(_) {
-        var currentTime, t1;
+        var currentTime, t1, position, t2;
         if (this._paused || this._stopped)
           return this._media$_position;
         else {
@@ -12078,12 +12117,14 @@
           t1 = this._timeOffset;
           if (typeof currentTime !== "number")
             return currentTime.$sub();
-          t1 = C.JSNumber_methods.clamp$2(currentTime - t1, 0, this._media$_duration);
-          return t1;
+          position = currentTime - t1;
+          t1 = this._loop;
+          t2 = this._media$_duration;
+          return t1 ? C.JSNumber_methods.$mod(position, t2) : C.JSNumber_methods.clamp$2(position, 0, t2);
         }
       },
       _onEnded$1: [function(e) {
-        if (!this._paused && !this._stopped && true) {
+        if (!this._paused && !this._stopped && !this._loop) {
           this._media$_position = this.get$position(this);
           this._stopped = true;
           this._paused = true;
@@ -12986,6 +13027,12 @@
               t1 = $.resourceManager;
               t1.toString;
               t1._addResource$4("Sound", "move", "res/audio/move.ogg", E.Sound_load("res/audio/move.ogg", null));
+              t1 = $.resourceManager;
+              t1.toString;
+              t1._addResource$4("Sound", "music_start", "res/audio/music_start.ogg", E.Sound_load("res/audio/music_start.ogg", null));
+              t1 = $.resourceManager;
+              t1.toString;
+              t1._addResource$4("Sound", "music_loop", "res/audio/music_loop.ogg", E.Sound_load("res/audio/music_loop.ogg", null));
               $async$goto = 2;
               return P._asyncAwait($.resourceManager.load$0(0), $async$loadResources);
             case 2:
@@ -13606,7 +13653,7 @@
         this.destroyedNumberField = t1;
         $.stage.addChild$1(t1);
         t1 = Y.TextField$("vehicles\ndestroyed", Y.TextFormat$("Share, sans-serif", 5, 0, "left", false, 0, null, 0, false, -4, 0, 0, 4278190080, 0, 0, false, "top", 400));
-        t1.set$width(0, 20);
+        t1.set$width(0, 25);
         t1._x = 47;
         t1._transformationMatrixRefresh = true;
         t1._y = 132;
@@ -13638,10 +13685,10 @@
           t1 = $.stage;
           t2 = Y.TextField$(this.level.tutorialText, Y.TextFormat$("Share, sans-serif", 5, 0, "center", false, 0, null, 0, false, -3, 0, 0, 4278190080, 0, 0, false, "top", 400));
           t2.set$width(0, 60);
-          t2.set$height(0, 30);
+          t2.set$height(0, 40);
           t2._x = 20;
           t2._transformationMatrixRefresh = true;
-          t2._y = 50;
+          t2._y = 45;
           t2.set$wordWrap(0, true);
           t1.addChild$1(t2);
         } else
@@ -13657,9 +13704,8 @@
         var t1, t2, t3, ldCar;
         this.width = 6;
         this.height = 6;
-        t1 = $.game;
-        this.onWon = t1.get$startLevel();
-        this.onLost = t1.get$startMenu();
+        this.onWon = new Y.Level$menu_closure();
+        this.onLost = $.game.get$startMenu();
         this.build$0();
         t1 = this.fieldSprite;
         t2 = H.interceptedTypeCast($.resourceManager._getResourceValue$2("BitmapData", "start"), "$isBitmapData");
@@ -13681,9 +13727,9 @@
         t1 = this.cars;
         (t1 && C.JSArray_methods).add$1(t1, ldCar);
         t1 = ldCar.sprite.on$1$1(0, "click", R.MouseEvent);
-        t1._subscribe$3(H.functionTypeCheck(new Y.Level$menu_closure(), {func: 1, ret: -1, args: [H.getTypeArgumentByIndex(t1, 0)]}), false, 0);
-        t1 = ldCar.sprite.on$1$1(0, "touchTap", R.TouchEvent);
         t1._subscribe$3(H.functionTypeCheck(new Y.Level$menu_closure0(), {func: 1, ret: -1, args: [H.getTypeArgumentByIndex(t1, 0)]}), false, 0);
+        t1 = ldCar.sprite.on$1$1(0, "touchTap", R.TouchEvent);
+        t1._subscribe$3(H.functionTypeCheck(new Y.Level$menu_closure1(), {func: 1, ret: -1, args: [H.getTypeArgumentByIndex(t1, 0)]}), false, 0);
         this.fieldSprite.addChild$1(ldCar.sprite);
       },
       Level$end$0: function() {
@@ -13693,7 +13739,15 @@
         t1 = $.game;
         this.onWon = t1.get$startLevel();
         this.onLost = t1.get$startMenu();
-        this.tutorialText = "Thank you for playing!\n\nmusic by sophiakene\ncode & graphics by phi";
+        t1 = t1.destroyedCount;
+        if (t1 > 9) {
+          t1 = "You killed " + (t1 - 9) + " more than needed. Shame on you.";
+          this.tutorialText = t1;
+        } else {
+          this.tutorialText = "You killed no more than needed. Impressive!";
+          t1 = "You killed no more than needed. Impressive!";
+        }
+        this.tutorialText = t1 + "\n\nThank you for playing!\nmusic by sophiakene\ncode & graphics by phi";
         this.build$0();
         ldCar = Y.Car$LD(this, 1, 4);
         t1 = this.cars;
@@ -13969,13 +14023,27 @@
       }
     },
     Level$menu_closure: {
+      "^": "Closure:0;",
+      call$0: function() {
+        var t1 = H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "music_start"), "$isSound").play$0(0).on$1$1(0, "complete", R.Event);
+        t1._subscribe$3(H.functionTypeCheck(new Y.Level$menu__closure(), {func: 1, ret: -1, args: [H.getTypeArgumentByIndex(t1, 0)]}), false, 0);
+        $.game.startLevel$0();
+      }
+    },
+    Level$menu__closure: {
+      "^": "Closure:48;",
+      call$1: function(e) {
+        return H.interceptedTypeCast($.resourceManager._getResourceValue$2("Sound", "music_loop"), "$isSound").play$1(0, true);
+      }
+    },
+    Level$menu_closure0: {
       "^": "Closure:18;",
       call$1: function(e) {
         H.interceptedTypeCheck(e, "$isMouseEvent");
         return C.Window_methods.open$2(window, "https://ldjam.com/", "_blank");
       }
     },
-    Level$menu_closure0: {
+    Level$menu_closure1: {
       "^": "Closure:19;",
       call$1: function(e) {
         H.interceptedTypeCheck(e, "$isTouchEvent");
@@ -14689,7 +14757,7 @@
   Isolate = Isolate.$finishIsolateConstructor(Isolate);
   $ = new Isolate();
   init.metadata = [];
-  init.types = [{func: 1, ret: P.Null}, {func: 1, ret: -1}, {func: 1, ret: -1, args: [R.MouseEvent]}, {func: 1, ret: -1, args: [R.TouchEvent]}, {func: 1, ret: -1, args: [W.Event0]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: -1, args: [,]}, {func: 1, ret: P.num, args: [P.num]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.bool, args: [O.ResourceManagerResource]}, {func: 1, args: [,]}, {func: 1, ret: P.String, args: [P.int]}, {func: 1, ret: P.bool, args: [A._Drag]}, {func: 1, ret: -1, args: [A._Drag]}, {func: 1, ret: -1, args: [P.ContextEvent]}, {func: 1, ret: -1, args: [P.num]}, {func: 1, ret: W.WindowBase, args: [R.MouseEvent]}, {func: 1, ret: W.WindowBase, args: [R.TouchEvent]}, {func: 1, args: [W.Event0]}, {func: 1, ret: P.Null, args: [W.DomException]}, {func: 1, ret: A.BitmapData, args: [W.ImageElement]}, {func: 1, ret: P.num, args: [P.num, P.num]}, {func: 1, ret: P.bool, args: [A.Stage]}, {func: 1, ret: -1, args: [A.Stage]}, {func: 1, ret: -1, args: [W.MouseEvent0]}, {func: 1, ret: -1, args: [W.WheelEvent]}, {func: 1, ret: -1, args: [W.TouchEvent0]}, {func: 1, ret: -1, args: [W.KeyboardEvent0]}, {func: 1, ret: -1, args: [P.String]}, {func: 1, ret: P.Null, args: [, P.StackTrace]}, {func: 1, ret: P.Null, args: [P.int,,]}, {func: 1, ret: A._TouchPoint}, {func: 1, args: [P.String]}, {func: 1, args: [, P.String]}, {func: 1, ret: P.Null, args: [P.num]}, {func: 1, ret: -1, opt: [P.Object]}, {func: 1, ret: P.String, args: [P.Error]}, {func: 1, ret: P.Null, args: [,], opt: [,]}, {func: 1, ret: -1, args: [W.AudioElement]}, {func: 1, ret: [P.Future,,], args: [O.ResourceManagerResource]}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, ret: Y._FontStyleMetrics}, {func: 1, ret: -1, args: [R.KeyboardEvent]}, {func: 1, ret: -1, args: [R.TextEvent]}, {func: 1, ret: P.Null, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Null, args: [W.ProgressEvent]}, {func: 1, ret: P.int}, {func: 1, args: [,,]}, {func: 1, ret: P.num}, {func: 1, ret: P.Null, args: [P.AudioBuffer]}, {func: 1, ret: -1, args: [A.BitmapData]}];
+  init.types = [{func: 1, ret: P.Null}, {func: 1, ret: -1}, {func: 1, ret: -1, args: [R.MouseEvent]}, {func: 1, ret: -1, args: [R.TouchEvent]}, {func: 1, ret: -1, args: [W.Event0]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: -1, args: [,]}, {func: 1, ret: P.num, args: [P.num]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.bool, args: [O.ResourceManagerResource]}, {func: 1, args: [,]}, {func: 1, ret: -1, args: [P.ContextEvent]}, {func: 1, ret: P.String, args: [P.int]}, {func: 1, ret: P.bool, args: [A._Drag]}, {func: 1, ret: -1, args: [A._Drag]}, {func: 1, ret: -1, args: [P.num]}, {func: 1, ret: W.WindowBase, args: [R.MouseEvent]}, {func: 1, ret: W.WindowBase, args: [R.TouchEvent]}, {func: 1, ret: P.Null, args: [W.ProgressEvent]}, {func: 1, ret: P.Null, args: [W.DomException]}, {func: 1, ret: A.BitmapData, args: [W.ImageElement]}, {func: 1, ret: P.num, args: [P.num, P.num]}, {func: 1, ret: P.bool, args: [A.Stage]}, {func: 1, ret: -1, args: [A.Stage]}, {func: 1, ret: -1, args: [W.MouseEvent0]}, {func: 1, ret: -1, args: [W.WheelEvent]}, {func: 1, ret: -1, args: [W.TouchEvent0]}, {func: 1, ret: -1, args: [W.KeyboardEvent0]}, {func: 1, ret: -1, args: [P.String]}, {func: 1, ret: P.Null, args: [P.int,,]}, {func: 1, args: [, P.String]}, {func: 1, ret: A._TouchPoint}, {func: 1, ret: -1, args: [A.BitmapData]}, {func: 1, ret: P.Null, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Null, args: [P.num]}, {func: 1, ret: -1, opt: [P.Object]}, {func: 1, ret: P.String, args: [P.Error]}, {func: 1, ret: P.Null, args: [,], opt: [,]}, {func: 1, ret: -1, args: [W.AudioElement]}, {func: 1, ret: [P.Future,,], args: [O.ResourceManagerResource]}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, ret: Y._FontStyleMetrics}, {func: 1, ret: -1, args: [R.KeyboardEvent]}, {func: 1, ret: -1, args: [R.TextEvent]}, {func: 1, args: [P.String]}, {func: 1, ret: P.int}, {func: 1, ret: E.SoundChannel, args: [R.Event]}, {func: 1, args: [W.Event0]}, {func: 1, args: [,,]}, {func: 1, ret: P.num}, {func: 1, ret: P.Null, args: [P.AudioBuffer]}, {func: 1, ret: P.Null, args: [, P.StackTrace]}];
   function convertToFastObject(properties) {
     function MyClass() {
     }
