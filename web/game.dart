@@ -26,9 +26,9 @@ class Game {
     stage.addChild(
       new TextField(level.tutorialText, new TextFormat('Share, sans-serif', 5, 0x000000, align: 'center', leading: -3))
         ..width = 60
-        ..height = 30
+        ..height = 40
         ..x = 20
-        ..y = 50
+        ..y = 45
         ..wordWrap = true
     );
   }
@@ -51,7 +51,7 @@ class Game {
         ..y = 130;
     stage.addChild(destroyedNumberField);
     destroyedTextField = new TextField('vehicles\ndestroyed', new TextFormat('Share, sans-serif', 5, 0x000000, leading: -4))
-        ..width = 20
+        ..width = 25
         ..x = 47
         ..y = 132;
     stage.addChild(destroyedTextField);

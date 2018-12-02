@@ -35,11 +35,17 @@ class Level {
   }
 
   Level.end() {
-    this.width = 6;
-    this.height = 6;
-    this.onWon = game.startLevel;
-    this.onLost = game.startMenu;
-    this.tutorialText = 'Thank you for playing!\n\nmusic by sophiakene\ncode & graphics by phi';
+    width = 6;
+    height = 6;
+    onWon = game.startLevel;
+    onLost = game.startMenu;
+    int destroyedNeeded = 9;
+    if (game.destroyedCount > destroyedNeeded) {
+      tutorialText = 'You killed ${game.destroyedCount - destroyedNeeded} more than needed. Shame on you.';
+    } else {
+      tutorialText = 'You killed no more than needed. Impressive!';
+    }
+    tutorialText += '\n\nThank you for playing!\nmusic by sophiakene\ncode & graphics by phi';
     build();
     Car ldCar = new Car.LD(this, 1, 4);
     cars.add(ldCar);
