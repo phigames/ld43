@@ -16,7 +16,11 @@ class Level {
   Level.menu() {
     this.width = 6;
     this.height = 6;
-    this.onWon = game.startLevel;
+    this.onWon = () {
+      resourceManager.getSound('music_start').play()
+        .onComplete.listen((e) => resourceManager.getSound('music_loop').play(true));
+      game.startLevel();
+    };
     this.onLost = game.startMenu;
     build();
     fieldSprite.addChild(

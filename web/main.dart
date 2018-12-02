@@ -52,5 +52,7 @@ void loadResources() async {
   resourceManager.addBitmapData('ld', 'res/images/ld.png');
   resourceManager.addSound('grenade', 'res/audio/grenade.ogg');
   resourceManager.addSound('move', 'res/audio/move.ogg');
+  resourceManager.addSound('music_start', 'res/audio/music_start.ogg');
+  resourceManager.addSound('music_loop', 'res/audio/music_loop.ogg');
   await resourceManager.load();
 }
