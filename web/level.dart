@@ -40,9 +40,11 @@ class Level {
     fieldSprite.graphics.fillColor(Color.Green);
 
     bombSprite = new Sprite();
-    bombSprite.graphics.beginPath();
-    bombSprite.graphics.circle(0.5, 0.5, 0.5);
-    bombSprite.graphics.fillColor(Color.DarkGray);
+    bombSprite.addChild(
+      new Bitmap(resourceManager.getBitmapData('grenade'))
+        ..width = 1
+        ..height = 1
+    );
 
     fieldSprite.x = FIELD_X;
     fieldSprite.y = FIELD_Y;

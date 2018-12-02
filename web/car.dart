@@ -31,8 +31,6 @@ class Car {
         ..width = getWidth()
         ..height = getHeight()
     );
-      // ..graphics.rect(0, 0, getWidth(), getHeight())
-      // ..graphics.fillColor(player ? Color.Red : 0xFF000000 + new Random().nextInt(0x88) * 0x10000 + new Random().nextInt(0x88) * 0x100 + new Random().nextInt(0x88));
     updateSprite();
     if (direction == Direction.horizontal) {
       sprite.onMouseDown.listen((e) => startDrag(_level.fieldSprite.globalToLocal(Point(e.stageX, e.stageY)).x));

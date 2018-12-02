@@ -35,6 +35,7 @@ Future<Null> main() async {
       }
     }
   }
+  resourceManager.addBitmapData('grenade', 'res/images/grenade.png');
   await resourceManager.load();
   random = new Random();
   game = new Game();
