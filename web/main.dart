@@ -38,6 +38,9 @@ Future<Null> main() async {
   resourceManager.addBitmapData('grenade', 'res/images/grenade.png');
   resourceManager.addBitmapData('border', 'res/images/border.png');
   resourceManager.addBitmapData('exit', 'res/images/exit.png');
+  for (int i = 0; i < 4; i++) {
+    resourceManager.addBitmapData('explosion${i}', 'res/images/explosion${i}.png');
+  }
   await resourceManager.load();
   random = new Random();
   game = new Game();

@@ -7,6 +7,13 @@ enum Direction {
 
 class Car {
 
+  static final List<BitmapData> EXPLOSION_FRAMES = [
+    resourceManager.getBitmapData('explosion0'),
+    resourceManager.getBitmapData('explosion1'),
+    resourceManager.getBitmapData('explosion2'),
+    resourceManager.getBitmapData('explosion3'),
+  ];
+
   Level _level;
   int x, y;
   Direction direction;
@@ -89,9 +96,32 @@ class Car {
   void animateExplode(void then()) {
     stage.juggler.add(
       new Tween(sprite, 0.5, Transition.easeInOutQuadratic)
+        ..delay = 0.3
         ..animate.alpha.to(0)
         ..onComplete = then
     );
+    for (int i = 0; i < 4; i++) {
+      Bitmap frame = new Bitmap(EXPLOSION_FRAMES[i])
+        ..pivotX = 120
+        ..pivotY = 120
+        ..x = getWidth() / 2
+        ..y = getHeight() / 2
+        ..width = 2
+        ..height = 2
+        ..alpha = 0;
+      sprite.addChild(frame);
+      stage.juggler.add(
+        new Tween(frame, 0.1)
+          ..delay = i * 0.1
+          ..animate.alpha.to(1)
+          ..onComplete = () {
+            stage.juggler.add(
+              new Tween(frame, i * 0.3, Transition.easeOutQuadratic)
+                ..animate.alpha.to(0)
+            );
+          }
+      );
+    }
   }
 
   bool occupies(int x, int y) {
