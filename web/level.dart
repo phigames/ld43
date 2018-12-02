@@ -79,6 +79,7 @@ class Level {
         onLost();
       }
     });
+    game.onDestroyedCar();
   }
 
   bool isOccupied(int x, int y) {

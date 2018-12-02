@@ -56,7 +56,7 @@ class LevelTemplate {
       r' ^ # .' +
       r' #<.##',
       6, 6,
-      'Looks like you got the hang of this. Don\'t worry, it\'ll get more challenging as we go along.'
+      'You only need one grenade per level to solve it. If you\'re stuck, you can use more (at the cost of human lives, of course).'
     ),
     new LevelTemplate(
       r'<# ^ ^' +
@@ -66,16 +66,7 @@ class LevelTemplate {
       r'.<# # ' +
       r'#<.#<#',
       6, 6,
-      'You only need one grenade per level to solve it. If you\'re stuck, you can use more (at the cost of human lives, of course).'
-    ),
-    new LevelTemplate(
-      r'^<#<.#' +
-      r'# ^^<#' +
-      r'<$## ^' +
-      r'  ^<#.' +
-      r'<#.  #' +
-      r'  #<.#',
-      6, 6
+      'Looks like you got the hang of this. Don\'t worry, it\'ll get more challenging as we go along.'
     ),
     new LevelTemplate(
       r'^<# ^^' +
@@ -84,6 +75,15 @@ class LevelTemplate {
       r'  #<.#' +
       r'    ^ ' +
       r'<.# # ',
+      6, 6
+    ),
+    new LevelTemplate(
+      r'^<#<.#' +
+      r'# ^^<#' +
+      r'<$## ^' +
+      r'  ^<#.' +
+      r'<#.  #' +
+      r'  #<.#',
       6, 6
     ),
     new LevelTemplate(
@@ -96,6 +96,15 @@ class LevelTemplate {
       6, 6
     ),
     new LevelTemplate(
+      r'  ^<.#' +
+      r'^ #^  ' +
+      r'#<$# ^' +
+      r'<#<#^#' +
+      r'<#<#.^' +
+      r'<.# ##',
+      6, 6
+    ),
+    new LevelTemplate(
       r' <#<# ' +
       r'<#<#^^' +
       r'^^<$..' +
@@ -105,12 +114,12 @@ class LevelTemplate {
       6, 6
     ),
     new LevelTemplate(
-      r'  ^<.#' +
-      r'^ #^  ' +
-      r'#<$# ^' +
-      r'<#<#^#' +
-      r'<#<#.^' +
-      r'<.# ##',
+      r'^<#<.#' +
+      r'#  ^ ^' +
+      r'<$ #^.' +
+      r'<.#^##' +
+      r'  ^#<#' +
+      r'<##<# ',
       6, 6
     ),
   ];
