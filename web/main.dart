@@ -31,6 +31,8 @@ Future<Null> main() async {
   for (int i = 0; i < 4; i++) {
     resourceManager.addBitmapData('explosion${i}', 'res/images/explosion${i}.png');
   }
+  resourceManager.addBitmapData('start', 'res/images/start.png');
+  resourceManager.addBitmapData('ld', 'res/images/ld.png');
   await resourceManager.load();
   html.CanvasElement canvas = html.querySelector('#stage');
   stage = new Stage(
@@ -44,4 +46,5 @@ Future<Null> main() async {
   renderLoop.addStage(stage);
   random = new Random();
   game = new Game();
+  game.startMenu();
 }

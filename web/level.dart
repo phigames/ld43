@@ -9,10 +9,52 @@ class Level {
   int exitX, exitY;
   List<Car> cars;
   String tutorialText;
+  Function onWon, onLost;
   bool won;
   Sprite sprite, fieldSprite, bombSprite;
 
-  Level.empty(this.width, this.height, [this.tutorialText = '']) {
+  Level.menu() {
+    this.width = 6;
+    this.height = 6;
+    this.onWon = game.startLevel;
+    this.onLost = game.startMenu;
+    build();
+    fieldSprite.addChild(
+      new Bitmap(resourceManager.getBitmapData('start'))
+        ..x = exitX - 2
+        ..y = exitY
+        ..width = 2
+        ..height = 1
+    );
+    Car startCar = addCar(0, 2, Direction.horizontal, 2, true);
+    Car ldCar = new Car.LD(this, 1, 4);
+    cars.add(ldCar);
+    ldCar.sprite.onMouseClick.listen((e) => html.window.open('https://ldjam.com/', '_blank'));
+    ldCar.sprite.onTouchTap.listen((e) => html.window.open('https://ldjam.com/', '_blank'));
+    fieldSprite.addChild(ldCar.sprite);
+    // fieldSprite.addChild(
+    //   new Sprite()
+    //     ..addChild(
+    //       new Bitmap(resourceManager.getBitmapData('ld'))
+    //         ..x = 0
+    //         ..y = 0
+    //         ..width = 4
+    //         ..height = 1
+    //     )
+    //     ..x = 1
+    //     ..y = 4
+    //     ..width = 4
+    //     ..height = 1
+    //     ..onMouseClick.listen((e) => html.window.open('https://ldjam.com/', '_blank'))
+    //     ..onTouchTap.listen((e) => html.window.open('https://ldjam.com/', '_blank'))
+    // );
+  }
+
+  Level.empty(this.width, this.height, this.onWon, this.onLost, [this.tutorialText = '']) {
+    build();
+  }
+
+  void build() {
     exitX = width;
     exitY = (height - 1) ~/ 2;
     cars = new List<Car>();
@@ -92,10 +134,11 @@ class Level {
     sprite.addChild(bombSprite);
   }
 
-  void addCar(int x, int y, Direction direction, int length, [bool player = false]) {
+  Car addCar(int x, int y, Direction direction, int length, [bool player = false]) {
     Car car = new Car(this, x, y, direction, length, player);
     cars.add(car);
     fieldSprite.addChild(car.sprite);
+    return car;
   }
 
   void explodeCar(Car car) {
@@ -135,14 +178,6 @@ class Level {
         car.animateWon(onWon);
       }
     }
-  }
-
-  void onWon() {
-    game.nextLevel();
-  }
-
-  void onLost() {
-    print('lost');
   }
 
   void _startBombDrag() {

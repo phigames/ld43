@@ -11,7 +11,12 @@ class Game {
   Game() {
     levelNumber = 0;
     destroyedCount = 0;
-    startLevel();
+  }
+
+  void startMenu() {
+    level = new Level.menu();
+    stage.removeChildren();
+    stage.addChild(level.sprite);
   }
 
   void startLevel() {
@@ -59,7 +64,9 @@ class Game {
 
   void onDestroyedCar() {
     destroyedCount++;
-    destroyedNumberField.text = destroyedCount.toString();
+    if (destroyedNumberField != null) {
+      destroyedNumberField.text = destroyedCount.toString();
+    }
   }
 
 }

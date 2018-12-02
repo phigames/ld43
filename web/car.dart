@@ -23,7 +23,9 @@ class Car {
   Sprite sprite;
 
   Car(this._level, this.x, this.y, this.direction, this.length, this.player) {
-    sprite = new Sprite();
+    sprite = new Sprite()
+      ..x = x
+      ..y = y;
     String bitmapName;
     if (player) {
       bitmapName = 'car_player';
@@ -52,6 +54,46 @@ class Car {
     }
     stage.onMouseUp.listen((e) => stopDrag());
     stage.onTouchEnd.listen((e) => stopDrag());
+    sprite.alpha = 0;
+    stage.juggler.add(
+      new Tween(sprite, 0.3)
+        ..delay = random.nextDouble() * 0.5
+        ..animate.alpha.to(1)
+    );
+  }
+
+  Car.LD(this._level, this.x, this.y) {
+    direction = Direction.horizontal;
+    length = 4;
+    player = false;
+    sprite = new Sprite()
+      ..x = x
+      ..y = y;
+    sprite.addChild(
+      new Bitmap(resourceManager.getBitmapData('ld'))
+        ..width = getWidth()
+        ..height = getHeight()
+    );
+    updateSprite();
+    if (direction == Direction.horizontal) {
+      sprite.onMouseDown.listen((e) => startDrag(_level.fieldSprite.globalToLocal(Point(e.stageX, e.stageY)).x));
+      sprite.onTouchBegin.listen((e) => startDrag(_level.fieldSprite.globalToLocal(Point(e.stageX, e.stageY)).x));
+      _level.fieldSprite.onMouseMove.listen((e) => drag(_level.fieldSprite.globalToLocal(Point(e.stageX, e.stageY)).x));
+      _level.fieldSprite.onTouchMove.listen((e) => drag(_level.fieldSprite.globalToLocal(Point(e.stageX, e.stageY)).x));
+    } else {
+      sprite.onMouseDown.listen((e) => startDrag(_level.fieldSprite.globalToLocal(Point(e.stageX, e.stageY)).y));
+      sprite.onTouchBegin.listen((e) => startDrag(_level.fieldSprite.globalToLocal(Point(e.stageX, e.stageY)).y));
+      _level.fieldSprite.onMouseMove.listen((e) => drag(_level.fieldSprite.globalToLocal(Point(e.stageX, e.stageY)).y));
+      _level.fieldSprite.onTouchMove.listen((e) => drag(_level.fieldSprite.globalToLocal(Point(e.stageX, e.stageY)).y));
+    }
+    stage.onMouseUp.listen((e) => stopDrag());
+    stage.onTouchEnd.listen((e) => stopDrag());
+    sprite.alpha = 0;
+    stage.juggler.add(
+      new Tween(sprite, 0.3)
+        ..delay = random.nextDouble() * 0.5
+        ..animate.alpha.to(1)
+    );
   }
 
   void updateSprite() {

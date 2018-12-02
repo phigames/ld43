@@ -5,3 +5,7 @@ html, body, .stage--fullscreen {
     padding: 0;
     border: 0;
 }
+
+/* .stage--fullscreen {
+    max-height: 500px;
+} */

@@ -134,7 +134,7 @@ class LevelTemplate {
     if (code.length != width * height) {
       throw('level parse error: level code has wrong length');
     }
-    Level level = new Level.empty(width, height, tutorialText);
+    Level level = new Level.empty(width, height, game.nextLevel, game.startLevel, tutorialText);
     for (int i = 0; i < code.runes.length; i++) {
       int x = i % width;
       int y = i ~/ width;
