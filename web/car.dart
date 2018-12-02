@@ -103,19 +103,25 @@ class Car {
   }
 
   void move(int amount) {
+    bool moved = false;
     if (direction == Direction.horizontal) {
       while (amount != 0 && !_level.isOccupied(x + (amount > 0 ? length - 1 : 0) + amount.sign, y)) {
         x += amount.sign;
         amount -= amount.sign;
+        moved = true;
       }
     } else {
       while (amount != 0 && !_level.isOccupied(x, y + (amount > 0 ? length - 1 : 0) + amount.sign)) {
         y += amount.sign;
         amount -= amount.sign;
+        moved = true;
       }
     }
-    updateSprite();
-    _level.checkWon(this);
+    if (moved) {
+      updateSprite();
+      _level.checkWon(this);
+      resourceManager.getSound('move').play();
+    }
   }
 
   void animateMove(int targetX, int targetY) {

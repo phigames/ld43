@@ -29,7 +29,7 @@ Future<Null> main() async {
   renderLoop.addStage(stage);
   random = new Random();
   game = new Game();
-  game.endMenu();
+  game.startMenu();
 }
 
 void loadResources() async {
@@ -51,5 +51,6 @@ void loadResources() async {
   resourceManager.addBitmapData('start', 'res/images/start.png');
   resourceManager.addBitmapData('ld', 'res/images/ld.png');
   resourceManager.addSound('grenade', 'res/audio/grenade.ogg');
+  resourceManager.addSound('move', 'res/audio/move.ogg');
   await resourceManager.load();
 }
