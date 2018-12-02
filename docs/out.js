@@ -3488,14 +3488,14 @@
     },
     _AsyncRun__scheduleImmediateJsOverride: [function(callback) {
       self.scheduleImmediate(H.convertDartClosureToJS(new P._AsyncRun__scheduleImmediateJsOverride_internalCallback(H.functionTypeCheck(callback, {func: 1, ret: -1})), 0));
-    }, "call$1", "async__AsyncRun__scheduleImmediateJsOverride$closure", 4, 0, 5],
+    }, "call$1", "async__AsyncRun__scheduleImmediateJsOverride$closure", 4, 0, 6],
     _AsyncRun__scheduleImmediateWithSetImmediate: [function(callback) {
       self.setImmediate(H.convertDartClosureToJS(new P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback(H.functionTypeCheck(callback, {func: 1, ret: -1})), 0));
-    }, "call$1", "async__AsyncRun__scheduleImmediateWithSetImmediate$closure", 4, 0, 5],
+    }, "call$1", "async__AsyncRun__scheduleImmediateWithSetImmediate$closure", 4, 0, 6],
     _AsyncRun__scheduleImmediateWithTimer: [function(callback) {
       H.functionTypeCheck(callback, {func: 1, ret: -1});
       P._TimerImpl$(0, callback);
-    }, "call$1", "async__AsyncRun__scheduleImmediateWithTimer$closure", 4, 0, 5],
+    }, "call$1", "async__AsyncRun__scheduleImmediateWithTimer$closure", 4, 0, 6],
     _makeAsyncAwaitCompleter: function($T) {
       return new P._AsyncAwaitCompleter(new P._SyncCompleter(new P._Future(0, $.Zone__current, [$T]), [$T]), false, [$T]);
     },
@@ -3691,7 +3691,7 @@
       P._rootHandleUncaughtError(null, null, t1, error, stackTrace);
     }, function(error) {
       return P._nullErrorHandler(error, null);
-    }, "call$2", "call$1", "async___nullErrorHandler$closure", 4, 2, 7],
+    }, "call$2", "call$1", "async___nullErrorHandler$closure", 4, 2, 8],
     _nullDoneHandler: [function() {
     }, "call$0", "async___nullDoneHandler$closure", 0, 0, 1],
     _rootHandleUncaughtError: function($self, $parent, zone, error, stackTrace) {
@@ -3953,7 +3953,7 @@
       "^": "Object;$ti"
     },
     Future_wait_handleError: {
-      "^": "Closure:6;_box_0,cleanUp,eagerError,result",
+      "^": "Closure:7;_box_0,cleanUp,eagerError,result",
       call$2: function(theError, theStackTrace) {
         var t1, t2;
         t1 = this._box_0;
@@ -4001,7 +4001,7 @@
         this._completeError$2(error, stackTrace);
       }, function(error) {
         return this.completeError$2(error, null);
-      }, "completeError$1", "call$2", "call$1", "get$completeError", 4, 2, 7],
+      }, "completeError$1", "call$2", "call$1", "get$completeError", 4, 2, 8],
       $isCompleter: 1
     },
     _AsyncCompleter: {
@@ -4182,7 +4182,7 @@
         P._Future__propagateToListeners(this, listeners);
       }, function(error) {
         return this._completeError$2(error, null);
-      }, "_completeError$1", "call$2", "call$1", "get$_completeError", 4, 2, 7],
+      }, "_completeError$1", "call$2", "call$1", "get$_completeError", 4, 2, 8],
       _asyncComplete$1: function(value) {
         var t1;
         H.futureOrCheck(value, {futureOr: 1, type: H.getTypeArgumentByIndex(this, 0)});
@@ -5084,7 +5084,7 @@
       "^": "MapMixin;"
     },
     MapBase_mapToString_closure: {
-      "^": "Closure:6;_box_0,result",
+      "^": "Closure:7;_box_0,result",
       call$2: function(k, v) {
         var t1, t2;
         t1 = this._box_0;
@@ -6103,7 +6103,7 @@
       return false;
     },
     convertDartToNative_Dictionary_closure: {
-      "^": "Closure:6;object",
+      "^": "Closure:7;object",
       call$2: function(key, value) {
         this.object[key] = value;
       }
@@ -6487,24 +6487,24 @@
     "^": "",
     Transition_linear: [function(ratio) {
       return ratio;
-    }, "call$1", "animation_Transition_linear$closure", 4, 0, 8],
+    }, "call$1", "animation_Transition_linear$closure", 4, 0, 5],
     Transition_easeInQuadratic: [function(ratio) {
       H.numTypeCheck(ratio);
       if (typeof ratio !== "number")
         return ratio.$mul();
       return ratio * ratio;
-    }, "call$1", "animation_Transition_easeInQuadratic$closure", 4, 0, 8],
+    }, "call$1", "animation_Transition_easeInQuadratic$closure", 4, 0, 5],
+    Transition_easeOutQuadratic: [function(ratio) {
+      H.numTypeCheck(ratio);
+      if (typeof ratio !== "number")
+        return H.iae(ratio);
+      ratio = 1 - ratio;
+      return 1 - ratio * ratio;
+    }, "call$1", "animation_Transition_easeOutQuadratic$closure", 4, 0, 5],
     Transition_easeInOutQuadratic: [function(ratio) {
-      var t1;
       ratio *= 2;
-      if (ratio < 1)
-        t1 = 0.5 * (ratio * ratio);
-      else {
-        ratio = 1 - (ratio - 1);
-        t1 = 0.5 * (1 - ratio * ratio) + 0.5;
-      }
-      return t1;
-    }, "call$1", "animation_Transition_easeInOutQuadratic$closure", 4, 0, 8],
+      return ratio < 1 ? 0.5 * (ratio * ratio) : 0.5 * K.Transition_easeOutQuadratic(ratio - 1) + 0.5;
+    }, "call$1", "animation_Transition_easeInOutQuadratic$closure", 4, 0, 5],
     _AnimatableLink: {
       "^": "Object;0animatable,0nextAnimatableLink"
     },
@@ -6676,6 +6676,12 @@
           }
         }
         return this._animation$_currentTime < this._totalTime;
+      },
+      set$delay: function(value) {
+        if (!this._started) {
+          this._animation$_currentTime = this._animation$_currentTime + this._delay - value;
+          this._delay = value;
+        }
       },
       $isAnimatable: 1,
       static: {
@@ -10655,6 +10661,9 @@
         t2 = H.getRuntimeTypeArgument(t1, "Iterable", 0);
         return P.List_List$from(new H.WhereIterable(t1, H.functionTypeCheck(new O.ResourceManager_failedResources_closure(), {func: 1, ret: P.bool, args: [t2]}), [t2]), true, t2);
       },
+      getBitmapData$1: function($name) {
+        return H.interceptedTypeCast(this._getResourceValue$2("BitmapData", $name), "$isBitmapData");
+      },
       _addResource$4: function(kind, $name, url, loader) {
         var key, resource, t1;
         key = kind + "." + $name;
@@ -11358,7 +11367,7 @@
     main: function() {
       var $async$goto = 0,
         $async$completer = P._makeAsyncAwaitCompleter(P.Null),
-        canvas, t1, t2, renderLoop, t3, _i, s1, _i0, s2, _i1, s3, t4, t5, t6;
+        t1, _i, s1, t2, _i0, s2, t3, _i1, s3, t4, t5, t6, i, canvas, renderLoop;
       var $async$main = P._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
         if ($async$errorCode === 1)
           return P._asyncRethrow($async$result, $async$completer);
@@ -11366,25 +11375,6 @@
           switch ($async$goto) {
             case 0:
               // Function start
-              canvas = H.interceptedTypeCheck(C.HtmlDocument_methods.querySelector$1(document, "#stage"), "$isCanvasElement");
-              t1 = new A.StageOptions(C.RenderEngine_0, C.InputEventMode_0, C.StageRenderMode_0, C.StageScaleMode_3, C.StageAlign_4, 4294967295, false, false, 5, true, true, false, false);
-              t1.backgroundColor = 4291611852;
-              t1.inputEventMode = C.InputEventMode_2;
-              $.stage = A.Stage$(canvas, 150, t1, 100);
-              t1 = K.Juggler$();
-              t2 = H.setRuntimeTypeInfo([], [A.Stage]);
-              renderLoop = new A.RenderLoop(t1, t2, new R.EnterFrameEvent(0, "enterFrame", false, C.EventPhase_1, false, false), new R.ExitFrameEvent("exitFrame", false, C.EventPhase_1, false, false), 0, false);
-              renderLoop._running = true;
-              L._globalFrameRequest();
-              t1 = $.$get$_globalFrameListeners();
-              (t1 && C.JSArray_methods).add$1(t1, renderLoop.get$_onGlobalFrame());
-              t1 = $.stage;
-              t3 = t1._renderLoop;
-              if (!(t3 == null))
-                if (C.JSArray_methods.remove$1(t3._stages, t1))
-                  t1._renderLoop = null;
-              t1._renderLoop = renderLoop;
-              C.JSArray_methods.add$1(t2, t1);
               t1 = new O.ResourceManager(new H.JsLinkedHashMap(0, 0, [P.String, O.ResourceManagerResource]), new P._AsyncBroadcastStreamController(null, null, 0, [P.num]));
               $.resourceManager = t1;
               t1._addResource$4("BitmapData", "car_player", "res/images/car_player.png", A.BitmapData_load("res/images/car_player.png", null));
@@ -11411,10 +11401,36 @@
               t1 = $.resourceManager;
               t1.toString;
               t1._addResource$4("BitmapData", "exit", "res/images/exit.png", A.BitmapData_load("res/images/exit.png", null));
+              for (i = 0; i < 4; ++i) {
+                t1 = $.resourceManager;
+                t2 = "explosion" + i;
+                t3 = "res/images/explosion" + i + ".png";
+                t1.toString;
+                t1._addResource$4("BitmapData", t2, t3, A.BitmapData_load(t3, null));
+              }
               $async$goto = 2;
               return P._asyncAwait($.resourceManager.load$0(0), $async$main);
             case 2:
               // returning from await.
+              canvas = H.interceptedTypeCheck(C.HtmlDocument_methods.querySelector$1(document, "#stage"), "$isCanvasElement");
+              t1 = new A.StageOptions(C.RenderEngine_0, C.InputEventMode_0, C.StageRenderMode_0, C.StageScaleMode_3, C.StageAlign_4, 4294967295, false, false, 5, true, true, false, false);
+              t1.backgroundColor = 4291611852;
+              t1.inputEventMode = C.InputEventMode_2;
+              $.stage = A.Stage$(canvas, 150, t1, 100);
+              t1 = K.Juggler$();
+              t2 = H.setRuntimeTypeInfo([], [A.Stage]);
+              renderLoop = new A.RenderLoop(t1, t2, new R.EnterFrameEvent(0, "enterFrame", false, C.EventPhase_1, false, false), new R.ExitFrameEvent("exitFrame", false, C.EventPhase_1, false, false), 0, false);
+              renderLoop._running = true;
+              L._globalFrameRequest();
+              t1 = $.$get$_globalFrameListeners();
+              (t1 && C.JSArray_methods).add$1(t1, renderLoop.get$_onGlobalFrame());
+              t1 = $.stage;
+              t3 = t1._renderLoop;
+              if (!(t3 == null))
+                if (C.JSArray_methods.remove$1(t3._stages, t1))
+                  t1._renderLoop = null;
+              t1._renderLoop = renderLoop;
+              C.JSArray_methods.add$1(t2, t1);
               $.random = C.C__JSRandom;
               t1 = new Y.Game();
               t1.levelNumber = 0;
@@ -11598,6 +11614,52 @@
             t2.add$1(0, t3);
           }
       },
+      animateExplode$1: function(then) {
+        var t1, t2, t3, t4, i, t5, frame, t6, t7, tweenProperty;
+        t1 = {func: 1, ret: -1};
+        H.functionTypeCheck(then, t1);
+        t2 = $.stage.juggler;
+        t3 = K.Tween$(this.sprite, 0.5, K.animation_Transition_easeInOutQuadratic$closure());
+        t3.set$delay(0.3);
+        t4 = t3.get$animate(t3);
+        t4._tween._createTweenProperty$2(t4, 9)._targetValue = 0;
+        t3._onComplete = then;
+        t2.add$1(0, t3);
+        for (t2 = [K.TweenProperty], t3 = [A.BitmapFilter], i = 0; i < 4; ++i) {
+          t4 = $.$get$Car_EXPLOSION_FRAMES()[i];
+          t5 = $.DisplayObject__nextID;
+          $.DisplayObject__nextID = t5 + 1;
+          frame = new A.Bitmap(t4, t5, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, H.setRuntimeTypeInfo([], t3), "", T.Matrix$fromIdentity(), true);
+          frame._pivotX = 120;
+          frame._pivotY = 120;
+          t4 = this.getWidth$0();
+          if (typeof t4 !== "number")
+            return t4.$div();
+          frame._x = t4 / 2;
+          t4 = this.getHeight$0();
+          if (typeof t4 !== "number")
+            return t4.$div();
+          frame._y = t4 / 2;
+          frame.set$width(0, 2);
+          frame.set$height(0, 2);
+          frame._alpha = 0;
+          this.sprite.addChild$1(frame);
+          t4 = $.stage.juggler;
+          t5 = new K.Tween(frame, K.animation_Transition_linear$closure(), H.setRuntimeTypeInfo([], t2), 0, 0, 0, false, false);
+          t5._totalTime = Math.max(0.0001, 0.1);
+          t6 = i * 0.1;
+          t5._animation$_currentTime = 0 - t6;
+          t5._delay = t6;
+          t6 = t5.get$animate(t5);
+          t7 = t6._tween;
+          tweenProperty = new K.TweenProperty(t6, 9, 0 / 0, 0 / 0, 0 / 0);
+          if (!t7._started)
+            C.JSArray_methods.add$1(t7._tweenPropertyList, tweenProperty);
+          tweenProperty._targetValue = 1;
+          t5._onComplete = H.functionTypeCheck(new Y.Car_animateExplode_closure(frame, i), t1);
+          t4.add$1(0, t5);
+        }
+      },
       occupies$2: function(x, y) {
         var t1, t2;
         if (this.direction === C.Direction_0) {
@@ -11773,6 +11835,17 @@
         H.interceptedTypeCheck(e, "$isTouchEvent");
         this.$this._dragStart = null;
         return;
+      }
+    },
+    Car_animateExplode_closure: {
+      "^": "Closure:0;frame,i",
+      call$0: function() {
+        var t1, t2, t3;
+        t1 = $.stage.juggler;
+        t2 = K.Tween$(this.frame, this.i * 0.3, K.animation_Transition_easeOutQuadratic$closure());
+        t3 = t2.get$animate(t2);
+        t3._tween._createTweenProperty$2(t3, 9)._targetValue = 0;
+        t1.add$1(0, t2);
       }
     },
     Game: {
@@ -11959,17 +12032,11 @@
         this.sprite.addChild$1(this.bombSprite);
       },
       explodeCar$1: function(car) {
-        var t1, t2, t3, t4;
-        t1 = H.functionTypeCheck(new Y.Level_explodeCar_closure(this, car), {func: 1, ret: -1});
-        t2 = $.stage.juggler;
-        t3 = K.Tween$(car.sprite, 0.5, K.animation_Transition_easeInOutQuadratic$closure());
-        t4 = t3.get$animate(t3);
-        t4._tween._createTweenProperty$2(t4, 9)._targetValue = 0;
-        t3._onComplete = t1;
-        t2.add$1(0, t3);
-        t3 = $.game;
-        t2 = ++t3.destroyedCount;
-        t3.destroyedNumberField.set$text(0, C.JSInt_methods.toString$0(t2));
+        var t1, t2;
+        car.animateExplode$1(new Y.Level_explodeCar_closure(this, car));
+        t1 = $.game;
+        t2 = ++t1.destroyedCount;
+        t1.destroyedNumberField.set$text(0, C.JSInt_methods.toString$0(t2));
       },
       isOccupied$2: function(x, y) {
         var t1;
@@ -12690,13 +12757,15 @@
     var t1 = $.$get$Mouse__cursorChangedEvent();
     t1.toString;
     return new P._BroadcastStream(t1, [H.getTypeArgumentByIndex(t1, 0)]);
-  }, "Mouse_onCursorChanged", "LevelTemplate_LD_LEVELS", "$get$LevelTemplate_LD_LEVELS", function() {
+  }, "Mouse_onCursorChanged", "Car_EXPLOSION_FRAMES", "$get$Car_EXPLOSION_FRAMES", function() {
+    return H.setRuntimeTypeInfo([$.resourceManager.getBitmapData$1("explosion0"), $.resourceManager.getBitmapData$1("explosion1"), $.resourceManager.getBitmapData$1("explosion2"), $.resourceManager.getBitmapData$1("explosion3")], [A.BitmapData]);
+  }, "Car_EXPLOSION_FRAMES", "LevelTemplate_LD_LEVELS", "$get$LevelTemplate_LD_LEVELS", function() {
     return H.setRuntimeTypeInfo([Y.LevelTemplate$("<#     <.#^  <$ . ^^  #^.#<# ##  <# ", 6, 6, "Let's be honest, you probably already know how this works. Get your red car out of the traffic jam."), Y.LevelTemplate$("  <# ^ <.# .<$ ^ #   #  <#   ^  <# #", 6, 6, "But, as they say: To succeed in life, you sometimes have to drop a grenade on a truck."), Y.LevelTemplate$("   ^<#<# . ^ <$# #   ^ ^ ^ # . #<.##", 6, 6, "You only need one grenade per level to solve it. If you're stuck, you can use more (at the cost of human lives, of course)."), Y.LevelTemplate$("<# ^ ^ <#. #<$^#^ ^ # . .<# # #<.#<#", 6, 6, "Looks like you got the hang of this. Don't worry, it'll get more challenging as we go along."), Y.LevelTemplate$("^<# ^^# ^ #.<$.  #  #<.#    ^ <.# # ", 6, 6, ""), Y.LevelTemplate$("^<#<.## ^^<#<$## ^  ^<#.<#.  #  #<.#", 6, 6, ""), Y.LevelTemplate$("^^<.# ##^ ^ <$#^.^<.####^    ^#<#<##", 6, 6, ""), Y.LevelTemplate$("  ^<.#^ #^  #<$# ^<#<#^#<#<#.^<.# ##", 6, 6, ""), Y.LevelTemplate$(" <#<# <#<#^^^^<$....^^######<#<#<#<#", 6, 6, ""), Y.LevelTemplate$("^<#<.##  ^ ^<$ #^.<.#^##  ^#<#<##<# ", 6, 6, "")], [Y.LevelTemplate]);
   }, "LevelTemplate_LD_LEVELS"]);
   Isolate = Isolate.$finishIsolateConstructor(Isolate);
   $ = new Isolate();
   init.metadata = [];
-  init.types = [{func: 1, ret: P.Null}, {func: 1, ret: -1}, {func: 1, ret: -1, args: [R.MouseEvent]}, {func: 1, ret: -1, args: [R.TouchEvent]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.num, args: [P.num]}, {func: 1, ret: P.bool, args: [O.ResourceManagerResource]}, {func: 1, args: [,]}, {func: 1, ret: P.bool, args: [A._Drag]}, {func: 1, ret: -1, args: [A._Drag]}, {func: 1, ret: -1, args: [P.ContextEvent]}, {func: 1, ret: -1, args: [W.Event0]}, {func: 1, ret: P.Null, args: [,], opt: [,]}, {func: 1, args: [W.Event0]}, {func: 1, ret: A.BitmapData, args: [W.ImageElement]}, {func: 1, ret: P.num, args: [P.num, P.num]}, {func: 1, ret: P.bool, args: [A.Stage]}, {func: 1, ret: -1, args: [A.Stage]}, {func: 1, ret: -1, args: [W.MouseEvent0]}, {func: 1, ret: -1, args: [W.WheelEvent]}, {func: 1, ret: -1, args: [W.TouchEvent0]}, {func: 1, ret: -1, args: [W.KeyboardEvent0]}, {func: 1, ret: -1, args: [P.String]}, {func: 1, args: [, P.String]}, {func: 1, ret: -1, args: [,]}, {func: 1, ret: P.Null, args: [, P.StackTrace]}, {func: 1, ret: -1, args: [A.BitmapData]}, {func: 1, ret: P.Null, args: [P.int,,]}, {func: 1, ret: P.Null, args: [P.num]}, {func: 1, ret: -1, args: [P.num]}, {func: 1, ret: P.Null, args: [{func: 1, ret: -1}]}, {func: 1, ret: [P.Future,,], args: [O.ResourceManagerResource]}, {func: 1, args: [P.String]}, {func: 1, ret: Y._FontStyleMetrics}, {func: 1, ret: -1, args: [R.KeyboardEvent]}, {func: 1, ret: -1, args: [R.TextEvent]}, {func: 1, ret: -1, opt: [P.Object]}, {func: 1, ret: P.int}, {func: 1, ret: P.num}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, ret: A._TouchPoint}];
+  init.types = [{func: 1, ret: P.Null}, {func: 1, ret: -1}, {func: 1, ret: -1, args: [R.MouseEvent]}, {func: 1, ret: -1, args: [R.TouchEvent]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: P.num, args: [P.num]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.bool, args: [O.ResourceManagerResource]}, {func: 1, args: [,]}, {func: 1, ret: P.bool, args: [A._Drag]}, {func: 1, ret: -1, args: [A._Drag]}, {func: 1, ret: -1, args: [P.ContextEvent]}, {func: 1, ret: -1, args: [W.Event0]}, {func: 1, ret: P.Null, args: [,], opt: [,]}, {func: 1, args: [W.Event0]}, {func: 1, ret: A.BitmapData, args: [W.ImageElement]}, {func: 1, ret: P.num, args: [P.num, P.num]}, {func: 1, ret: P.bool, args: [A.Stage]}, {func: 1, ret: -1, args: [A.Stage]}, {func: 1, ret: -1, args: [W.MouseEvent0]}, {func: 1, ret: -1, args: [W.WheelEvent]}, {func: 1, ret: -1, args: [W.TouchEvent0]}, {func: 1, ret: -1, args: [W.KeyboardEvent0]}, {func: 1, ret: -1, args: [P.String]}, {func: 1, args: [, P.String]}, {func: 1, ret: -1, args: [,]}, {func: 1, ret: P.Null, args: [, P.StackTrace]}, {func: 1, ret: -1, args: [A.BitmapData]}, {func: 1, ret: P.Null, args: [P.int,,]}, {func: 1, ret: P.Null, args: [P.num]}, {func: 1, ret: -1, args: [P.num]}, {func: 1, ret: P.Null, args: [{func: 1, ret: -1}]}, {func: 1, ret: [P.Future,,], args: [O.ResourceManagerResource]}, {func: 1, args: [P.String]}, {func: 1, ret: Y._FontStyleMetrics}, {func: 1, ret: -1, args: [R.KeyboardEvent]}, {func: 1, ret: -1, args: [R.TextEvent]}, {func: 1, ret: -1, opt: [P.Object]}, {func: 1, ret: P.int}, {func: 1, ret: P.num}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, ret: A._TouchPoint}];
   function convertToFastObject(properties) {
     function MyClass() {
     }
