@@ -16,6 +16,23 @@ Random random;
 Game game;
 
 Future<Null> main() async {
+  await loadResources();
+  html.CanvasElement canvas = html.querySelector('#stage');
+  stage = new Stage(
+    canvas, width: 100, height: 150,
+    options: new StageOptions()
+      ..backgroundColor = 0xFFCCCCCC
+      ..renderEngine = RenderEngine.WebGL
+      ..inputEventMode = InputEventMode.MouseAndTouch
+  );
+  RenderLoop renderLoop = new RenderLoop();
+  renderLoop.addStage(stage);
+  random = new Random();
+  game = new Game();
+  game.endMenu();
+}
+
+void loadResources() async {
   resourceManager = new ResourceManager();
   resourceManager.addBitmapData('car_player', 'res/images/car_player.png');
   for (String s1 in ['car', 'truck']) {
@@ -33,18 +50,6 @@ Future<Null> main() async {
   }
   resourceManager.addBitmapData('start', 'res/images/start.png');
   resourceManager.addBitmapData('ld', 'res/images/ld.png');
+  resourceManager.addSound('grenade', 'res/audio/grenade.ogg');
   await resourceManager.load();
-  html.CanvasElement canvas = html.querySelector('#stage');
-  stage = new Stage(
-    canvas, width: 100, height: 150,
-    options: new StageOptions()
-      ..backgroundColor = 0xFFCCCCCC
-      ..renderEngine = RenderEngine.WebGL
-      ..inputEventMode = InputEventMode.MouseAndTouch
-  );
-  RenderLoop renderLoop = new RenderLoop();
-  renderLoop.addStage(stage);
-  random = new Random();
-  game = new Game();
-  game.startMenu();
 }

@@ -9,7 +9,7 @@ class Game {
   TextField destroyedNumberField, destroyedTextField;
 
   Game() {
-    levelNumber = 0;
+    levelNumber = 9;
     destroyedCount = 0;
   }
 
@@ -17,6 +17,20 @@ class Game {
     level = new Level.menu();
     stage.removeChildren();
     stage.addChild(level.sprite);
+  }
+
+  void endMenu() {
+    level = new Level.end();
+    stage.removeChildren();
+    stage.addChild(level.sprite);
+    stage.addChild(
+      new TextField(level.tutorialText, new TextFormat('Share, sans-serif', 5, 0x000000, align: 'center', leading: -3))
+        ..width = 60
+        ..height = 30
+        ..x = 20
+        ..y = 50
+        ..wordWrap = true
+    );
   }
 
   void startLevel() {
@@ -56,7 +70,7 @@ class Game {
   void nextLevel() {
     levelNumber++;
     if (levelNumber >= LevelTemplate.LD_LEVELS.length) {
-      print('game over');
+      endMenu();
     } else {
       startLevel();
     }

@@ -32,22 +32,20 @@ class Level {
     ldCar.sprite.onMouseClick.listen((e) => html.window.open('https://ldjam.com/', '_blank'));
     ldCar.sprite.onTouchTap.listen((e) => html.window.open('https://ldjam.com/', '_blank'));
     fieldSprite.addChild(ldCar.sprite);
-    // fieldSprite.addChild(
-    //   new Sprite()
-    //     ..addChild(
-    //       new Bitmap(resourceManager.getBitmapData('ld'))
-    //         ..x = 0
-    //         ..y = 0
-    //         ..width = 4
-    //         ..height = 1
-    //     )
-    //     ..x = 1
-    //     ..y = 4
-    //     ..width = 4
-    //     ..height = 1
-    //     ..onMouseClick.listen((e) => html.window.open('https://ldjam.com/', '_blank'))
-    //     ..onTouchTap.listen((e) => html.window.open('https://ldjam.com/', '_blank'))
-    // );
+  }
+
+  Level.end() {
+    this.width = 6;
+    this.height = 6;
+    this.onWon = game.startLevel;
+    this.onLost = game.startMenu;
+    this.tutorialText = 'Thank you for playing!\n\nmusic by sophiakene\ncode & graphics by phi';
+    build();
+    Car ldCar = new Car.LD(this, 1, 4);
+    cars.add(ldCar);
+    ldCar.sprite.onMouseClick.listen((e) => html.window.open('https://ldjam.com/', '_blank'));
+    ldCar.sprite.onTouchTap.listen((e) => html.window.open('https://ldjam.com/', '_blank'));
+    fieldSprite.addChild(ldCar.sprite);
   }
 
   Level.empty(this.width, this.height, this.onWon, this.onLost, [this.tutorialText = '']) {
@@ -204,6 +202,7 @@ class Level {
             ..animate.scaleX.to(1)
             ..animate.scaleY.to(1);
         };
+      resourceManager.getSound('grenade').play();
     } else {
       // reset the bomb
       stage.juggler.addTween(bombSprite, 0.2, Transition.easeInOutQuadratic)
