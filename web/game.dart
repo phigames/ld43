@@ -15,9 +15,17 @@ class Game {
   }
 
   void startLevel() {
-    stage.removeChildren();
     level = LevelTemplate.LD_LEVELS[levelNumber].parse();
+    stage.removeChildren();
     stage.addChild(level.sprite);
+    stage.addChild(
+      new TextField(level.tutorialText, new TextFormat('Share, sans-serif', 5, 0x000000, align: 'center', verticalAlign: 'bottom', leading: -3))
+        ..width = 100
+        ..height = 23
+        ..x = 0
+        ..y = 3
+        ..wordWrap = true
+    );
     destroyedNumberField = new TextField(destroyedCount.toString(), new TextFormat('Share, sans-serif', 12, 0x000000, align: 'right'))
         ..width = 16
         ..x = 30

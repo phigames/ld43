@@ -55,14 +55,6 @@ class Level {
     bombSprite.onMouseUp.listen((e) => _stopBombDrag());
     bombSprite.onTouchEnd.listen((e) => _stopBombDrag());
     sprite.addChild(bombSprite);
-    stage.addChild(
-      new TextField(tutorialText, new TextFormat('Share, sans-serif', 5, 0x000000, align: 'center', verticalAlign: 'bottom', leading: -3))
-        ..width = 100
-        ..height = 23
-        ..x = 0
-        ..y = 3
-        ..wordWrap = true
-    );
   }
 
   void addCar(int x, int y, Direction direction, int length, [bool player = false]) {

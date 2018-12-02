@@ -11,6 +11,8 @@ part 'leveltemplate.dart';
 part 'car.dart';
 
 Stage stage;
+ResourceManager resourceManager;
+Random random;
 Game game;
 
 Future<Null> main() async {
@@ -24,7 +26,16 @@ Future<Null> main() async {
   );
   RenderLoop renderLoop = new RenderLoop();
   renderLoop.addStage(stage);
-  ResourceManager resourceManager = new ResourceManager();
+  resourceManager = new ResourceManager();
+  resourceManager.addBitmapData('car_player', 'res/images/car_player.png');
+  for (String s1 in ['car', 'truck']) {
+    for (String s2 in ['h', 'v']) {
+      for (int s3 in [1, 2]) {
+        resourceManager.addBitmapData('${s1}_${s2}${s3}', 'res/images/${s1}_${s2}${s3}.png');
+      }
+    }
+  }
   await resourceManager.load();
+  random = new Random();
   game = new Game();
 }

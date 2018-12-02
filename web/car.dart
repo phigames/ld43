@@ -16,9 +16,23 @@ class Car {
   Sprite sprite;
 
   Car(this._level, this.x, this.y, this.direction, this.length, this.player) {
-    sprite = new Sprite()
-      ..graphics.rect(0, 0, getWidth(), getHeight())
-      ..graphics.fillColor(player ? Color.Red : 0xFF000000 + new Random().nextInt(0x88) * 0x10000 + new Random().nextInt(0x88) * 0x100 + new Random().nextInt(0x88));
+    sprite = new Sprite();
+    String bitmapName;
+    if (player) {
+      bitmapName = 'car_player';
+    } else {
+      bitmapName = '${(length == 2 ? 'car' : 'truck')}' +
+                   '_' +
+                   '${(direction == Direction.horizontal ? 'h' : 'v')}' +
+                   '${[1, 2][random.nextInt(2)]}';
+    }
+    sprite.addChild(
+      new Bitmap(resourceManager.getBitmapData(bitmapName))
+        ..width = getWidth()
+        ..height = getHeight()
+    );
+      // ..graphics.rect(0, 0, getWidth(), getHeight())
+      // ..graphics.fillColor(player ? Color.Red : 0xFF000000 + new Random().nextInt(0x88) * 0x10000 + new Random().nextInt(0x88) * 0x100 + new Random().nextInt(0x88));
     updateSprite();
     if (direction == Direction.horizontal) {
       sprite.onMouseDown.listen((e) => startDrag(_level.fieldSprite.globalToLocal(Point(e.stageX, e.stageY)).x));
