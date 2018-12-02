@@ -1901,12 +1901,25 @@
     propertyTypeError: function(value, property) {
       throw H.wrapException(H.TypeErrorImplementation$(value, H.unminifyOrTag(H.stringTypeCheck(property).substring(3))));
     },
+    propertyTypeCastError: function(value, property) {
+      throw H.wrapException(H.CastErrorImplementation$(value, H.unminifyOrTag(H.stringTypeCheck(property).substring(3))));
+    },
     interceptedTypeCheck: function(value, property) {
       if (value == null)
         return value;
       if ((typeof value === "object" || typeof value === "function") && J.getInterceptor$(value)[property])
         return value;
       H.propertyTypeError(value, property);
+    },
+    interceptedTypeCast: function(value, property) {
+      var t1;
+      if (value != null)
+        t1 = (typeof value === "object" || typeof value === "function") && J.getInterceptor$(value)[property];
+      else
+        t1 = true;
+      if (t1)
+        return value;
+      H.propertyTypeCastError(value, property);
     },
     stringSuperNativeTypeCheck: function(value, property) {
       if (value == null)
@@ -2641,7 +2654,7 @@
       "^": "Object;dartException,stackTrace"
     },
     unwrapException_saveStackTrace: {
-      "^": "Closure:8;ex",
+      "^": "Closure:10;ex",
       call$1: function(error) {
         if (!!J.getInterceptor$(error).$isError)
           if (error.$thrownJsError == null)
@@ -3093,7 +3106,7 @@
       $isIterator: 1
     },
     initHooks_closure: {
-      "^": "Closure:8;getTag",
+      "^": "Closure:10;getTag",
       call$1: function(o) {
         return this.getTag(o);
       }
@@ -3475,14 +3488,14 @@
     },
     _AsyncRun__scheduleImmediateJsOverride: [function(callback) {
       self.scheduleImmediate(H.convertDartClosureToJS(new P._AsyncRun__scheduleImmediateJsOverride_internalCallback(H.functionTypeCheck(callback, {func: 1, ret: -1})), 0));
-    }, "call$1", "async__AsyncRun__scheduleImmediateJsOverride$closure", 4, 0, 4],
+    }, "call$1", "async__AsyncRun__scheduleImmediateJsOverride$closure", 4, 0, 5],
     _AsyncRun__scheduleImmediateWithSetImmediate: [function(callback) {
       self.setImmediate(H.convertDartClosureToJS(new P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback(H.functionTypeCheck(callback, {func: 1, ret: -1})), 0));
-    }, "call$1", "async__AsyncRun__scheduleImmediateWithSetImmediate$closure", 4, 0, 4],
+    }, "call$1", "async__AsyncRun__scheduleImmediateWithSetImmediate$closure", 4, 0, 5],
     _AsyncRun__scheduleImmediateWithTimer: [function(callback) {
       H.functionTypeCheck(callback, {func: 1, ret: -1});
       P._TimerImpl$(0, callback);
-    }, "call$1", "async__AsyncRun__scheduleImmediateWithTimer$closure", 4, 0, 4],
+    }, "call$1", "async__AsyncRun__scheduleImmediateWithTimer$closure", 4, 0, 5],
     _makeAsyncAwaitCompleter: function($T) {
       return new P._AsyncAwaitCompleter(new P._SyncCompleter(new P._Future(0, $.Zone__current, [$T]), [$T]), false, [$T]);
     },
@@ -3588,8 +3601,10 @@
     _registerErrorHandler: function(errorHandler, zone) {
       if (H.functionTypeTest(errorHandler, {func: 1, args: [P.Object, P.StackTrace]}))
         return zone.registerBinaryCallback$3$1(errorHandler, null, P.Object, P.StackTrace);
-      if (H.functionTypeTest(errorHandler, {func: 1, args: [P.Object]}))
+      if (H.functionTypeTest(errorHandler, {func: 1, args: [P.Object]})) {
+        zone.toString;
         return H.functionTypeCheck(errorHandler, {func: 1, ret: null, args: [P.Object]});
+      }
       throw H.wrapException(P.ArgumentError$value(errorHandler, "onError", "Error handler must accept one Object or one Object and a StackTrace as arguments, and return a a valid result"));
     },
     _microtaskLoop: function() {
@@ -3676,7 +3691,7 @@
       P._rootHandleUncaughtError(null, null, t1, error, stackTrace);
     }, function(error) {
       return P._nullErrorHandler(error, null);
-    }, "call$2", "call$1", "async___nullErrorHandler$closure", 4, 2, 6],
+    }, "call$2", "call$1", "async___nullErrorHandler$closure", 4, 2, 7],
     _nullDoneHandler: [function() {
     }, "call$0", "async___nullDoneHandler$closure", 0, 0, 1],
     _rootHandleUncaughtError: function($self, $parent, zone, error, stackTrace) {
@@ -3741,7 +3756,7 @@
       P._scheduleAsyncCallback(f);
     },
     _AsyncRun__initializeScheduleImmediate_internalCallback: {
-      "^": "Closure:9;_box_0",
+      "^": "Closure:4;_box_0",
       call$1: function(_) {
         var t1, f;
         t1 = this._box_0;
@@ -3938,7 +3953,7 @@
       "^": "Object;$ti"
     },
     Future_wait_handleError: {
-      "^": "Closure:5;_box_0,cleanUp,eagerError,result",
+      "^": "Closure:6;_box_0,cleanUp,eagerError,result",
       call$2: function(theError, theStackTrace) {
         var t1, t2;
         t1 = this._box_0;
@@ -3986,7 +4001,7 @@
         this._completeError$2(error, stackTrace);
       }, function(error) {
         return this.completeError$2(error, null);
-      }, "completeError$1", "call$2", "call$1", "get$completeError", 4, 2, 6],
+      }, "completeError$1", "call$2", "call$1", "get$completeError", 4, 2, 7],
       $isCompleter: 1
     },
     _AsyncCompleter: {
@@ -4167,7 +4182,7 @@
         P._Future__propagateToListeners(this, listeners);
       }, function(error) {
         return this._completeError$2(error, null);
-      }, "_completeError$1", "call$2", "call$1", "get$_completeError", 4, 2, 6],
+      }, "_completeError$1", "call$2", "call$1", "get$_completeError", 4, 2, 7],
       _asyncComplete$1: function(value) {
         var t1;
         H.futureOrCheck(value, {futureOr: 1, type: H.getTypeArgumentByIndex(this, 0)});
@@ -4351,7 +4366,7 @@
       }
     },
     _Future__chainForeignFuture_closure: {
-      "^": "Closure:9;target",
+      "^": "Closure:4;target",
       call$1: function(value) {
         var t1 = this.target;
         t1._state = 0;
@@ -5069,7 +5084,7 @@
       "^": "MapMixin;"
     },
     MapBase_mapToString_closure: {
-      "^": "Closure:5;_box_0,result",
+      "^": "Closure:6;_box_0,result",
       call$2: function(k, v) {
         var t1, t2;
         t1 = this._box_0;
@@ -6088,7 +6103,7 @@
       return false;
     },
     convertDartToNative_Dictionary_closure: {
-      "^": "Closure:5;object",
+      "^": "Closure:6;object",
       call$2: function(key, value) {
         this.object[key] = value;
       }
@@ -6472,13 +6487,13 @@
     "^": "",
     Transition_linear: [function(ratio) {
       return ratio;
-    }, "call$1", "animation_Transition_linear$closure", 4, 0, 7],
+    }, "call$1", "animation_Transition_linear$closure", 4, 0, 8],
     Transition_easeInQuadratic: [function(ratio) {
       H.numTypeCheck(ratio);
       if (typeof ratio !== "number")
         return ratio.$mul();
       return ratio * ratio;
-    }, "call$1", "animation_Transition_easeInQuadratic$closure", 4, 0, 7],
+    }, "call$1", "animation_Transition_easeInQuadratic$closure", 4, 0, 8],
     Transition_easeInOutQuadratic: [function(ratio) {
       var t1;
       ratio *= 2;
@@ -6489,7 +6504,7 @@
         t1 = 0.5 * (1 - ratio * ratio) + 0.5;
       }
       return t1;
-    }, "call$1", "animation_Transition_easeInOutQuadratic$closure", 4, 0, 7],
+    }, "call$1", "animation_Transition_easeInOutQuadratic$closure", 4, 0, 8],
     _AnimatableLink: {
       "^": "Object;0animatable,0nextAnimatableLink"
     },
@@ -6561,11 +6576,7 @@
     Tween: {
       "^": "Object;_tweenObject,_transition,_tweenPropertyList,0_onStart,0_onUpdate,0_onComplete,_totalTime,_animation$_currentTime,_delay,_roundToInt,_started",
       get$animate: function(_) {
-        var tweenObject = this._tweenObject;
-        if (!!J.getInterceptor$(tweenObject).$isTweenObject2D)
-          return new K.TweenPropertyAccessor2D(this, tweenObject);
-        else
-          throw H.wrapException(P.StateError$("Invalid tween object for 2D animation."));
+        return new K.TweenPropertyAccessor2D(this, this._tweenObject);
       },
       _createTweenProperty$2: function(accessor, propertyID) {
         var tweenProperty = new K.TweenProperty(accessor, propertyID, 0 / 0, 0 / 0, 0 / 0);
@@ -6670,8 +6681,6 @@
       static: {
         Tween$: function(tweenObject, time, transition) {
           var t1 = new K.Tween(tweenObject, transition, H.setRuntimeTypeInfo([], [K.TweenProperty]), 0, 0, 0, false, false);
-          if (!J.getInterceptor$(tweenObject).$isTweenObject)
-            H.throwExpression(P.ArgumentError$("tweenObject"));
           t1._totalTime = Math.max(0.0001, time);
           return t1;
         }
@@ -6718,6 +6727,30 @@
     }
   }], ["stagexl.display", "package:stagexl/src/display.dart",, A, {
     "^": "",
+    Bitmap: {
+      "^": "DisplayObject;_bitmapData,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,0_mask,0_blendMode,_filters,0_cache,_display$_name,0_parent,_transformationMatrix,_transformationMatrixRefresh,0userData,0_eventStreams",
+      get$bounds: function() {
+        var t1, t2;
+        t1 = this._bitmapData;
+        t2 = [P.num];
+        return t1 == null ? new U.Rectangle0(0, 0, 0, 0, t2) : new U.Rectangle0(0, 0, t1.width, t1.height, t2);
+      },
+      hitTestInput$2: function(localX, localY) {
+        var t1 = this._bitmapData;
+        if (t1 == null)
+          return;
+        if (localX < 0 || localX >= t1.width)
+          return;
+        if (localY < 0 || localY >= t1.height)
+          return;
+        return this;
+      },
+      render$1: function(renderState) {
+        var t1 = this._bitmapData;
+        if (t1 != null)
+          renderState._engine$_renderContext.renderTextureQuad$2(renderState, t1.renderTextureQuad);
+      }
+    },
     BitmapData: {
       "^": "Object;width,height,renderTextureQuad",
       static: {
@@ -6828,7 +6861,8 @@
         return this._x;
       },
       set$x: ["super$DisplayObject$x", function(_, value) {
-        this._x = value;
+        if (typeof value === "number")
+          this._x = value;
         this._transformationMatrixRefresh = true;
       }],
       get$y: function(_) {
@@ -6839,6 +6873,32 @@
         for (obj = this; obj0 = obj._parent, obj0 != null; obj = obj0)
           ;
         return obj;
+      },
+      set$width: function(_, value) {
+        var bounds, matrix, t1, scale, ma, mc;
+        bounds = this.get$bounds();
+        matrix = this.get$transformationMatrix();
+        t1 = matrix.transformRectangle$2(bounds, bounds).width;
+        if (typeof value !== "number")
+          return value.$div();
+        scale = value / t1;
+        ma = isFinite(scale) ? matrix._data[0] * scale : 1;
+        mc = isFinite(scale) ? matrix._data[2] * scale : 0;
+        t1 = matrix._data;
+        this._reverseMatrix$4(ma, t1[1], mc, t1[3]);
+      },
+      set$height: function(_, value) {
+        var bounds, matrix, t1, scale, mb, md;
+        bounds = this.get$bounds();
+        matrix = this.get$transformationMatrix();
+        t1 = matrix.transformRectangle$2(bounds, bounds).height;
+        if (typeof value !== "number")
+          return value.$div();
+        scale = value / t1;
+        mb = isFinite(scale) ? matrix._data[1] * scale : 0;
+        md = isFinite(scale) ? matrix._data[3] * scale : 1;
+        t1 = matrix._data;
+        this._reverseMatrix$4(t1[0], mb, t1[2], md);
       },
       get$transformationMatrix: function() {
         var matrix, rotation, scaleX, scaleY, skewX, skewY, t1, ma, mb, mc, md, t2, t3, cr, sr;
@@ -6975,6 +7035,24 @@
           ++i;
         }
       },
+      render$1: function(renderState) {
+      },
+      _reverseMatrix$4: function(ma, mb, mc, md) {
+        var t1, skewX, cosX, sinX, skewY, cosY, sinY;
+        t1 = -mc;
+        skewX = Math.atan2(t1, md);
+        cosX = Math.cos(skewX);
+        sinX = Math.sin(skewX);
+        skewY = Math.atan2(mb, ma);
+        cosY = Math.cos(skewY);
+        sinY = Math.sin(skewY);
+        this._transformationMatrixRefresh = true;
+        this._scaleX = cosY * cosY > sinY * sinY ? ma / cosY : mb / sinY;
+        this._scaleY = cosX * cosX > sinX * sinX ? md / cosX : t1 / sinX;
+        t1 = this._rotation;
+        this._skewX = skewX - t1;
+        this._skewY = skewY - t1;
+      },
       $isTweenObject: 1,
       $isTweenObject2D: 1,
       $isRenderObject: 1
@@ -7096,7 +7174,9 @@
             displayObject = child.hitTestInput$2((t3 * deltaX - t4 * deltaY) / t6, (t5 * deltaY - t2 * deltaX) / t6);
             if (displayObject == null)
               continue;
-            return displayObject;
+            if (!!displayObject.$isInteractiveObject && true)
+              return displayObject;
+            hit = this;
           }
         }
         return hit;
@@ -7262,13 +7342,13 @@
       }
     },
     Sprite: {
-      "^": "DisplayObjectContainer;0_display$_graphics,0dropTarget,0hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,0_mask,0_blendMode,_filters,0_cache,_display$_name,0_parent,_transformationMatrix,_transformationMatrixRefresh,0userData,0_eventStreams",
+      "^": "DisplayObjectContainer;0_graphics,0dropTarget,0hitArea,_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,mouseCursor,tabEnabled,tabIndex,displayObjectID,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,0_mask,0_blendMode,_filters,0_cache,_display$_name,0_parent,_transformationMatrix,_transformationMatrixRefresh,0userData,0_eventStreams",
       get$graphics: function() {
-        var t1 = this._display$_graphics;
+        var t1 = this._graphics;
         if (!(t1 != null)) {
           t1 = [U.GraphicsCommand];
           t1 = new U.Graphics(H.setRuntimeTypeInfo([], t1), H.setRuntimeTypeInfo([], t1));
-          this._display$_graphics = t1;
+          this._graphics = t1;
         }
         return t1;
       },
@@ -7314,7 +7394,7 @@
       },
       get$bounds: function() {
         var t1, t2, t3, t4, t5, rLeft, t6, t7, rTop, t8, rRight, rBottom;
-        t1 = this._display$_graphics;
+        t1 = this._graphics;
         if (t1 == null)
           return A.DisplayObjectContainer.prototype.get$bounds.call(this);
         else if (this._children.length === 0)
@@ -7337,7 +7417,7 @@
       },
       hitTestInput$2: function(localX, localY) {
         var graphics, target;
-        graphics = this._display$_graphics;
+        graphics = this._graphics;
         target = this.super$DisplayObjectContainer$hitTestInput(localX, localY);
         if (target == null && graphics != null)
           target = graphics.hitTest$2(localX, localY) ? this : null;
@@ -7345,7 +7425,7 @@
       },
       render$1: function(renderState) {
         var t1, t2, commands, t3, t4;
-        t1 = this._display$_graphics;
+        t1 = this._graphics;
         if (t1 != null) {
           t2 = renderState._engine$_renderContext;
           if (t2 instanceof L.RenderContextCanvas) {
@@ -7722,7 +7802,7 @@
         this.set$_mousePosition(stagePoint);
         C.JSArray_methods.forEach$1(this._drags, new A.Stage__onMouseEvent_closure(stagePoint));
         if ($event.type !== "mouseout")
-          target = this.hitTestInput$2(stagePoint.x, stagePoint.y);
+          target = H.interceptedTypeCast(this.hitTestInput$2(stagePoint.x, stagePoint.y), "$isInteractiveObject");
         else {
           this.dispatchEvent$1(0, new R.Event("mouseLeave", false, C.EventPhase_1, false, false));
           target = null;
@@ -7855,7 +7935,7 @@
         t1 = P.num;
         stagePoint = this._clientTransformation.transformPoint$1(new P.Point0($event.clientX, $event.clientY, [t1]));
         localPoint = new U.Point(0, 0, [t1]);
-        target = this.hitTestInput$2(stagePoint.x, stagePoint.y);
+        target = H.interceptedTypeCast(this.hitTestInput$2(stagePoint.x, stagePoint.y), "$isInteractiveObject");
         target.globalToLocal$2(stagePoint, localPoint);
         t1 = localPoint.x;
         t2 = localPoint.y;
@@ -7880,7 +7960,7 @@
           stagePoint = t11.transformPoint$1(new P.Point0(C.JSNumber_methods.round$0(changedTouch.clientX), C.JSNumber_methods.round$0(changedTouch.clientY), t10));
           localPoint = new U.Point(0, 0, t9);
           target = this.super$DisplayObjectContainer$hitTestInput(stagePoint.x, stagePoint.y);
-          target = target != null ? target : this;
+          target = H.interceptedTypeCast(target != null ? target : this, "$isInteractiveObject");
           touchPoint = t7.putIfAbsent$2(identifier, new A.Stage__onTouchEvent_closure(this, target));
           touchPointID = touchPoint.touchPointID;
           primaryTouchPoint = touchPoint.primaryTouchPoint;
@@ -7985,20 +8065,20 @@
       }
     },
     Stage__startDrag_closure: {
-      "^": "Closure:10;touchPointID,sprite",
+      "^": "Closure:11;touchPointID,sprite",
       call$1: function(d) {
         H.interceptedTypeCheck(d, "$is_Drag");
         return d.touchPointID === this.touchPointID || d.sprite === this.sprite;
       }
     },
     Stage__stopDrag_closure: {
-      "^": "Closure:10;sprite",
+      "^": "Closure:11;sprite",
       call$1: function(d) {
         return H.interceptedTypeCheck(d, "$is_Drag").sprite === this.sprite;
       }
     },
     Stage__onMouseEvent_closure: {
-      "^": "Closure:11;stagePoint",
+      "^": "Closure:12;stagePoint",
       call$1: function(d) {
         return H.interceptedTypeCheck(d, "$is_Drag").update$2(0, this.stagePoint);
       }
@@ -8015,7 +8095,7 @@
       }
     },
     Stage__onTouchEvent_closure0: {
-      "^": "Closure:11;touchPointID,stagePoint",
+      "^": "Closure:12;touchPointID,stagePoint",
       call$1: function(d) {
         return H.interceptedTypeCheck(d, "$is_Drag").update$2(this.touchPointID, this.stagePoint);
       }
@@ -8178,40 +8258,22 @@
   }], ["stagexl.drawing", "package:stagexl/src/drawing.dart",, U, {
     "^": "",
     GraphicsCommandBeginPath: {
-      "^": "GraphicsCommand;0_graphics",
+      "^": "GraphicsCommand;0_drawing$_graphics",
       updateContext$1: function(context) {
         context.beginPath$0(0);
-      }
-    },
-    GraphicsCommandCircle: {
-      "^": "GraphicsCommand;_drawing$_x,_drawing$_y,_radius,_antiClockwise,0_graphics",
-      get$x: function(_) {
-        return this._drawing$_x;
-      },
-      get$y: function(_) {
-        return this._drawing$_y;
-      },
-      updateContext$1: function(context) {
-        var t1, t2, t3;
-        t1 = this._drawing$_x;
-        t2 = this._radius;
-        t3 = this._drawing$_y;
-        context.moveTo$2(0, t1 + t2, t3);
-        context.arc$6(0, t1, t3, t2, 0, 6.283185307179586, false);
-        context.closePath$0(0);
       }
     },
     GraphicsCommandFill: {
       "^": "GraphicsCommand;"
     },
     GraphicsCommandFillColor: {
-      "^": "GraphicsCommandFill;_color,0_graphics",
+      "^": "GraphicsCommandFill;_color,0_drawing$_graphics",
       updateContext$1: function(context) {
         context.fillColor$1(this._color);
       }
     },
     GraphicsCommandRect: {
-      "^": "GraphicsCommand;_drawing$_x,_drawing$_y,_drawing$_width,_drawing$_height,0_graphics",
+      "^": "GraphicsCommand;_drawing$_x,_drawing$_y,_drawing$_width,_drawing$_height,0_drawing$_graphics",
       get$x: function(_) {
         return this._drawing$_x;
       },
@@ -8229,13 +8291,6 @@
         context.lineTo$2(0, t3, t2);
         context.lineTo$2(0, t1, t2);
         context.closePath$0(0);
-      },
-      static: {
-        GraphicsCommandRect$: function(x, y, width, height) {
-          width.toString;
-          height.toString;
-          return new U.GraphicsCommandRect(x, y, width, height);
-        }
       }
     },
     Graphics: {
@@ -8244,10 +8299,10 @@
         this._bounds = H.assertSubtype(_bounds, "$isRectangle0", [P.num], "$asRectangle0");
       },
       addCommand$1: function(command) {
-        if (command._graphics != null && true)
+        if (command._drawing$_graphics != null && true)
           H.throwExpression(P.ArgumentError$("Command is already assigned to graphics."));
         else
-          command._graphics = this;
+          command._drawing$_graphics = this;
         C.JSArray_methods.add$1(this._originalCommands, command);
         C.JSArray_methods.set$length(this._compiledCommands, 0);
         this.set$_bounds(null);
@@ -8296,7 +8351,7 @@
       "^": "Object;"
     },
     _GraphicsCommandMeshColor: {
-      "^": "GraphicsCommand;mesh,color,0_graphics",
+      "^": "GraphicsCommand;mesh,color,0_drawing$_graphics",
       updateContext$1: function(context) {
         if (!!context.$is_GraphicsContextBase)
           context.meshColor$1(this);
@@ -8320,10 +8375,13 @@
         this._path.moveTo$2(0, x, y);
       },
       lineTo$2: function(_, x, y) {
-        this._path.lineTo$2(0, x, y);
-      },
-      arc$6: function(_, x, y, radius, startAngle, endAngle, antiClockwise) {
-        this._path.arc$6(0, x, y, radius, startAngle, endAngle, false);
+        var t1, t2;
+        t1 = this._path;
+        t2 = t1._currentSegment;
+        if (t2 == null)
+          t1.moveTo$2(0, x, y);
+        else
+          t2.addVertex$2(x, y);
       }
     },
     _GraphicsContextBounds: {
@@ -8380,11 +8438,6 @@
       lineTo$2: function(_, x, y) {
         var t1 = this._canvasContext;
         (t1 && C.CanvasRenderingContext2D_methods).lineTo$2(t1, x, y);
-      },
-      arc$6: function(_, x, y, radius, startAngle, endAngle, antiClockwise) {
-        var t1 = this._canvasContext;
-        t1.toString;
-        t1.arc(x, y, radius, startAngle, endAngle, false);
       },
       fillColor$1: function(color) {
         var t1 = this._canvasContext;
@@ -8529,37 +8582,6 @@
         this._currentSegment = t1;
         t1.addVertex$2(x, y);
         C.JSArray_methods.add$1(this.segments, this._currentSegment);
-      },
-      lineTo$2: function(_, x, y) {
-        var t1 = this._currentSegment;
-        if (t1 == null)
-          this.moveTo$2(0, x, y);
-        else
-          t1.addVertex$2(x, y);
-      },
-      arc$6: function(_, x, y, radius, startAngle, endAngle, antiClockwise) {
-        var start, delta, steps, t1, cosR, sinR, tx, ty, ax, ay, s, bx, by;
-        start = C.JSInt_methods.$mod(startAngle, 6.283185307179586);
-        delta = C.JSNumber_methods.$mod(endAngle, 6.283185307179586) - start;
-        if (endAngle < startAngle) {
-          if (delta <= 0)
-            delta += 6.283185307179586;
-        } else
-          delta = endAngle - startAngle >= 6.283185307179586 ? 6.283185307179586 : C.JSDouble_methods.$mod(delta, 6.283185307179586);
-        steps = C.JSDouble_methods.ceil$0(Math.abs(60 * delta / 6.283185307179586));
-        t1 = delta / steps;
-        cosR = Math.cos(t1);
-        sinR = Math.sin(t1);
-        tx = x - x * cosR + y * sinR;
-        ty = y - x * sinR - y * cosR;
-        ax = x + Math.cos(start) * radius;
-        ay = y + Math.sin(start) * radius;
-        this.lineTo$2(0, ax, ay);
-        for (s = 1; s <= steps; ++s, ay = by, ax = bx) {
-          bx = ax * cosR - ay * sinR + tx;
-          by = ax * sinR + ay * cosR + ty;
-          this._currentSegment.addVertex$2(bx, by);
-        }
       },
       fillColor$2: function(renderState, color) {
         var t1, t2, t3, _i, segment, t4, t5, ixList, vxList;
@@ -9138,7 +9160,7 @@
         H.interceptedTypeCheck(contextEvent, "$isContextEvent").preventDefault();
         this._contextValid = false;
         this._contextLostEvent.add$1(0, new L.RenderContextEvent());
-      }, "call$1", "get$_onContextLost", 4, 0, 12],
+      }, "call$1", "get$_onContextLost", 4, 0, 13],
       _onContextRestored$1: [function(contextEvent) {
         var t1;
         H.interceptedTypeCheck(contextEvent, "$isContextEvent");
@@ -9147,7 +9169,7 @@
         $.RenderContextWebGL__globalContextIdentifier = t1;
         this._contextIdentifier = t1;
         this._contextRestoredEvent.add$1(0, new L.RenderContextEvent());
-      }, "call$1", "get$_onContextRestored", 4, 0, 12]
+      }, "call$1", "get$_onContextRestored", 4, 0, 13]
     },
     RenderFilter: {
       "^": "Object;"
@@ -9578,9 +9600,9 @@
         md = t2[3];
         mx = t2[4];
         my = t2[5];
-        colorA = 0.00392156862745098 * (C.JSInt_methods._shrOtherPositive$1(color, 24) & 255) * alpha;
-        colorR = 0.00392156862745098 * (C.JSInt_methods._shrOtherPositive$1(color, 16) & 255) * colorA;
-        colorG = 0.00392156862745098 * (C.JSInt_methods._shrOtherPositive$1(color, 8) & 255) * colorA;
+        colorA = 0.00392156862745098 * (color >>> 24 & 255) * alpha;
+        colorR = 0.00392156862745098 * (color >>> 16 & 255) * colorA;
+        colorG = 0.00392156862745098 * (color >>> 8 & 255) * colorA;
         colorB = 0.00392156862745098 * (color & 255) * colorA;
         for (i = 0, o = 0; i < vxListCount; ++i, o += 2) {
           if (o >= t1)
@@ -10516,12 +10538,12 @@
         this._onLoadSubscription.cancel$0();
         this._onErrorSubscription.cancel$0();
         this._image_loader$_completer.complete$1(0, this.image);
-      }, "call$1", "get$_onImageLoad", 4, 0, 13],
+      }, "call$1", "get$_onImageLoad", 4, 0, 14],
       _onImageError$1: [function($event) {
         this._onLoadSubscription.cancel$0();
         this._onErrorSubscription.cancel$0();
         this._image_loader$_completer.completeError$1(new T.LoadError("Failed to load " + H.S(this.image.src) + ".", null));
-      }, "call$1", "get$_onImageError", 4, 0, 13]
+      }, "call$1", "get$_onImageError", 4, 0, 14]
     }
   }], ["stagexl.internal.jenkins_hash", "package:stagexl/src/internal/jenkins_hash.dart",, O, {
     "^": "",
@@ -10541,11 +10563,7 @@
       return "rgb(" + (color >>> 16 & 255) + "," + (color >>> 8 & 255) + "," + (color & 255) + ")";
     },
     color2rgba: function(color) {
-      var t1, t2, t3;
-      t1 = C.JSInt_methods._shrOtherPositive$1(color, 16);
-      t2 = C.JSInt_methods._shrOtherPositive$1(color, 8);
-      t3 = C.JSInt_methods._shrOtherPositive$1(color, 24);
-      return "rgba(" + (t1 & 255) + "," + (t2 & 255) + "," + (color & 255) + "," + H.S((t3 & 255) / 255) + ")";
+      return "rgba(" + (color >>> 16 & 255) + "," + (color >>> 8 & 255) + "," + (color & 255) + "," + H.S((color >>> 24 & 255) / 255) + ")";
     },
     minNum: function(a, b) {
       if (typeof b !== "number")
@@ -10616,6 +10634,13 @@
         });
         return P._asyncStartSync($async$load$0, $async$completer);
       },
+      get$finishedResources: function() {
+        var t1, t2;
+        t1 = this._resourceMap;
+        t1 = t1.get$values(t1);
+        t2 = H.getRuntimeTypeArgument(t1, "Iterable", 0);
+        return P.List_List$from(new H.WhereIterable(t1, H.functionTypeCheck(new O.ResourceManager_finishedResources_closure(), {func: 1, ret: P.bool, args: [t2]}), [t2]), true, t2);
+      },
       get$pendingResources: function() {
         var t1, t2;
         t1 = this._resourceMap;
@@ -10629,30 +10654,120 @@
         t1 = t1.get$values(t1);
         t2 = H.getRuntimeTypeArgument(t1, "Iterable", 0);
         return P.List_List$from(new H.WhereIterable(t1, H.functionTypeCheck(new O.ResourceManager_failedResources_closure(), {func: 1, ret: P.bool, args: [t2]}), [t2]), true, t2);
+      },
+      _addResource$4: function(kind, $name, url, loader) {
+        var key, resource, t1;
+        key = kind + "." + $name;
+        resource = O.ResourceManagerResource$(kind, $name, url, loader);
+        t1 = this._resourceMap;
+        if (t1.containsKey$1(key))
+          throw H.wrapException(P.StateError$("ResourceManager already contains a resource called '" + $name + "'"));
+        else
+          t1.$indexSet(0, key, resource);
+        resource._resources$_completer.future.then$1$1(new O.ResourceManager__addResource_closure(this), null);
+      },
+      _getResourceValue$2: function(kind, $name) {
+        var resource, t1;
+        resource = this._resourceMap.$index(0, kind + "." + $name);
+        if (resource == null)
+          throw H.wrapException(P.StateError$("Resource '" + $name + "' does not exist."));
+        else {
+          t1 = resource._value;
+          if (t1 != null)
+            return t1;
+          else {
+            t1 = resource._error;
+            if (t1 != null)
+              throw H.wrapException(t1);
+            else
+              throw H.wrapException(P.StateError$("Resource '" + $name + "' has not finished loading yet."));
+          }
+        }
       }
     },
     ResourceManager_load_closure: {
       "^": "Closure:34;",
       call$1: function(r) {
-        return C.JSNull_methods.get$complete(H.interceptedTypeCheck(r, "$isResourceManagerResource"));
+        return H.interceptedTypeCheck(r, "$isResourceManagerResource")._resources$_completer.future;
+      }
+    },
+    ResourceManager_finishedResources_closure: {
+      "^": "Closure:9;",
+      call$1: function(r) {
+        return H.interceptedTypeCheck(r, "$isResourceManagerResource")._value != null;
       }
     },
     ResourceManager_pendingResources_closure: {
-      "^": "Closure:14;",
+      "^": "Closure:9;",
       call$1: function(r) {
-        C.JSNull_methods.get$value(H.interceptedTypeCheck(r, "$isResourceManagerResource"));
-        return false;
+        H.interceptedTypeCheck(r, "$isResourceManagerResource");
+        return r._value == null && r._error == null;
       }
     },
     ResourceManager_failedResources_closure: {
-      "^": "Closure:14;",
+      "^": "Closure:9;",
       call$1: function(r) {
-        C.JSNull_methods.get$error(H.interceptedTypeCheck(r, "$isResourceManagerResource"));
-        return true;
+        return H.interceptedTypeCheck(r, "$isResourceManagerResource")._error != null;
+      }
+    },
+    ResourceManager__addResource_closure: {
+      "^": "Closure:4;$this",
+      call$1: function(_) {
+        var t1 = this.$this;
+        t1._progressEvent.add$1(0, t1.get$finishedResources().length / t1._resourceMap._length);
       }
     },
     ResourceManagerResource: {
-      "^": "Object;"
+      "^": "Object;kind,name,url,0_value,0_error,_resources$_completer",
+      ResourceManagerResource$4: function(kind, $name, url, loader) {
+        var t1, onError, t2, t3, t4, result, action;
+        t1 = loader.then$1$1(new O.ResourceManagerResource_closure(this), null);
+        onError = new O.ResourceManagerResource_closure0(this);
+        t2 = H.getTypeArgumentByIndex(t1, 0);
+        t3 = $.Zone__current;
+        t4 = [t2];
+        result = new P._Future(0, t3, t4);
+        if (t3 !== C.C__RootZone)
+          onError = P._registerErrorHandler(onError, t3);
+        t2 = [t2, t2];
+        t1._addListener$1(new P._FutureListener(result, 2, null, onError, t2));
+        action = H.functionTypeCheck(new O.ResourceManagerResource_closure1(this), {func: 1});
+        t1 = $.Zone__current;
+        if (t1 !== C.C__RootZone) {
+          t1.toString;
+          H.functionTypeCheck(action, {func: 1, ret: null});
+        }
+        result._addListener$1(new P._FutureListener(new P._Future(0, t1, t4), 8, action, null, t2));
+      },
+      toString$0: function(_) {
+        return "ResourceManagerResource [kind=" + this.kind + ", name=" + this.name + ", url = " + this.url + "]";
+      },
+      static: {
+        ResourceManagerResource$: function(kind, $name, url, loader) {
+          var t1 = new O.ResourceManagerResource(kind, $name, url, new P._AsyncCompleter(new P._Future(0, $.Zone__current, [null]), [null]));
+          t1.ResourceManagerResource$4(kind, $name, url, loader);
+          return t1;
+        }
+      }
+    },
+    ResourceManagerResource_closure: {
+      "^": "Closure:4;$this",
+      call$1: function(resource) {
+        this.$this._value = resource;
+      }
+    },
+    ResourceManagerResource_closure0: {
+      "^": "Closure:4;$this",
+      call$1: function(error) {
+        this.$this._error = error;
+      }
+    },
+    ResourceManagerResource_closure1: {
+      "^": "Closure:0;$this",
+      call$0: function() {
+        var t1 = this.$this;
+        t1._resources$_completer.complete$1(0, t1);
+      }
     }
   }], ["stagexl.text", "package:stagexl/src/text.dart",, Y, {
     "^": "",
@@ -11199,11 +11314,9 @@
           t2 = $.DisplayObject__nextID;
           $.DisplayObject__nextID = t2 + 1;
           t2 = new Y.TextField("", "none", "dynamic", 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false, "\u2022", 4294967295, 4278190080, 0, 100, 100, 0, 0, t1, 3, true, false, true, "auto", true, 0, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, H.setRuntimeTypeInfo([], [A.BitmapFilter]), "", T.Matrix$fromIdentity(), true);
-          t2._text = text;
-          t2._caretIndex = text.length;
-          t2._refreshPending = 3;
+          t2.set$text(0, text);
           t2._defaultTextFormat = Y.TextFormat$(textFormat.font, textFormat.size, textFormat.color, textFormat.align, false, textFormat.bottomMargin, textFormat.fillGradient, textFormat.indent, false, textFormat.leading, textFormat.leftMargin, textFormat.rightMargin, textFormat.strokeColor, textFormat.strokeWidth, textFormat.topMargin, false, textFormat.verticalAlign, textFormat.weight);
-          t2._refreshPending = 3;
+          t2._refreshPending |= 3;
           t1 = t2.on$1$1(0, "keyDown", R.KeyboardEvent);
           t1._subscribe$3(H.functionTypeCheck(t2.get$_onKeyDown(), {func: 1, ret: -1, args: [H.getTypeArgumentByIndex(t1, 0)]}), false, 0);
           t1 = t2.on$1$1(0, "textInput", R.TextEvent);
@@ -11245,7 +11358,7 @@
     main: function() {
       var $async$goto = 0,
         $async$completer = P._makeAsyncAwaitCompleter(P.Null),
-        canvas, t1, t2, renderLoop, t3;
+        canvas, t1, t2, renderLoop, t3, _i, s1, _i0, s2, _i1, s3, t4, t5, t6;
       var $async$main = P._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
         if ($async$errorCode === 1)
           return P._asyncRethrow($async$result, $async$completer);
@@ -11255,6 +11368,7 @@
               // Function start
               canvas = H.interceptedTypeCheck(C.HtmlDocument_methods.querySelector$1(document, "#stage"), "$isCanvasElement");
               t1 = new A.StageOptions(C.RenderEngine_0, C.InputEventMode_0, C.StageRenderMode_0, C.StageScaleMode_3, C.StageAlign_4, 4294967295, false, false, 5, true, true, false, false);
+              t1.backgroundColor = 4291611852;
               t1.inputEventMode = C.InputEventMode_2;
               $.stage = A.Stage$(canvas, 150, t1, 100);
               t1 = K.Juggler$();
@@ -11271,10 +11385,37 @@
                   t1._renderLoop = null;
               t1._renderLoop = renderLoop;
               C.JSArray_methods.add$1(t2, t1);
+              t1 = new O.ResourceManager(new H.JsLinkedHashMap(0, 0, [P.String, O.ResourceManagerResource]), new P._AsyncBroadcastStreamController(null, null, 0, [P.num]));
+              $.resourceManager = t1;
+              t1._addResource$4("BitmapData", "car_player", "res/images/car_player.png", A.BitmapData_load("res/images/car_player.png", null));
+              for (t1 = ["car", "truck"], _i = 0; _i < 2; ++_i) {
+                s1 = t1[_i];
+                for (t2 = ["h", "v"], _i0 = 0; _i0 < 2; ++_i0) {
+                  s2 = t2[_i0];
+                  for (t3 = [1, 2], _i1 = 0; _i1 < 2; ++_i1) {
+                    s3 = t3[_i1];
+                    t4 = $.resourceManager;
+                    t5 = s1 + "_" + s2 + s3;
+                    t6 = "res/images/" + s1 + "_" + s2 + s3 + ".png";
+                    t4.toString;
+                    t4._addResource$4("BitmapData", t5, t6, A.BitmapData_load(t6, null));
+                  }
+                }
+              }
+              t1 = $.resourceManager;
+              t1.toString;
+              t1._addResource$4("BitmapData", "grenade", "res/images/grenade.png", A.BitmapData_load("res/images/grenade.png", null));
+              t1 = $.resourceManager;
+              t1.toString;
+              t1._addResource$4("BitmapData", "border", "res/images/border.png", A.BitmapData_load("res/images/border.png", null));
+              t1 = $.resourceManager;
+              t1.toString;
+              t1._addResource$4("BitmapData", "exit", "res/images/exit.png", A.BitmapData_load("res/images/exit.png", null));
               $async$goto = 2;
-              return P._asyncAwait(new O.ResourceManager(new H.JsLinkedHashMap(0, 0, [P.String, O.ResourceManagerResource]), new P._AsyncBroadcastStreamController(null, null, 0, [P.num])).load$0(0), $async$main);
+              return P._asyncAwait($.resourceManager.load$0(0), $async$main);
             case 2:
               // returning from await.
+              $.random = C.C__JSRandom;
               t1 = new Y.Game();
               t1.levelNumber = 0;
               t1.destroyedCount = 0;
@@ -11295,26 +11436,31 @@
     Car: {
       "^": "Object;_level,x>,y>,direction,length>,player,0_dragStart,0sprite",
       Car$6: function(_level, x, y, direction, $length, player) {
-        var t1, t2, t3, t4;
+        var t1, t2, t3, bitmapName, t4;
         t1 = H.setRuntimeTypeInfo([], [A.DisplayObject]);
         t2 = $.DisplayObject__nextID;
         $.DisplayObject__nextID = t2 + 1;
-        t2 = new A.Sprite(t1, true, true, false, true, "auto", true, 0, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, H.setRuntimeTypeInfo([], [A.BitmapFilter]), "", T.Matrix$fromIdentity(), true);
-        t1 = t2.get$graphics();
-        t3 = this.getWidth$0();
-        t4 = this.getHeight$0();
-        t1.toString;
-        t1.addCommand$1(U.GraphicsCommandRect$(0, 0, t3, t4));
-        t4 = t2.get$graphics();
+        t3 = [A.BitmapFilter];
+        this.sprite = new A.Sprite(t1, true, true, false, true, "auto", true, 0, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, H.setRuntimeTypeInfo([], t3), "", T.Matrix$fromIdentity(), true);
         if (this.player)
-          t1 = 4294901760;
+          bitmapName = "car_player";
         else {
-          t1 = C.C__JSRandom.nextInt$1(136);
-          t3 = C.C__JSRandom.nextInt$1(136);
-          t1 = 4278190080 + t1 * 65536 + t3 * 256 + C.C__JSRandom.nextInt$1(136);
+          t1 = (this.length === 2 ? "car" : "truck") + "_";
+          t1 += this.direction === C.Direction_0 ? "h" : "v";
+          t2 = [1, 2];
+          t4 = $.random.nextInt$1(2);
+          if (t4 < 0 || t4 >= 2)
+            return H.ioore(t2, t4);
+          bitmapName = t1 + t2[t4];
         }
-        t4.addCommand$1(new U.GraphicsCommandFillColor(t1));
-        this.sprite = t2;
+        t1 = this.sprite;
+        t2 = H.interceptedTypeCast($.resourceManager._getResourceValue$2("BitmapData", bitmapName), "$isBitmapData");
+        t4 = $.DisplayObject__nextID;
+        $.DisplayObject__nextID = t4 + 1;
+        t3 = new A.Bitmap(t2, t4, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, H.setRuntimeTypeInfo([], t3), "", T.Matrix$fromIdentity(), true);
+        t3.set$width(0, this.getWidth$0());
+        t3.set$height(0, this.getHeight$0());
+        t1.addChild$1(t3);
         this.updateSprite$0();
         t1 = this.sprite;
         t2 = R.MouseEvent;
@@ -11364,12 +11510,17 @@
         var t1, t2, t3, t4, t5, t6;
         if (this.direction === C.Direction_0) {
           t1 = this._level;
-          t2 = this.length - 1;
+          t2 = this.length;
           while (true) {
             if (amount !== 0) {
               t3 = this.x;
               t4 = amount > 0;
-              t5 = t4 ? t2 : 0;
+              if (t4) {
+                if (typeof t2 !== "number")
+                  return t2.$sub();
+                t5 = t2 - 1;
+              } else
+                t5 = 0;
               if (t4)
                 t4 = 1;
               else
@@ -11395,13 +11546,18 @@
           }
         } else {
           t1 = this._level;
-          t2 = this.length - 1;
+          t2 = this.length;
           while (true) {
             if (amount !== 0) {
               t3 = this.x;
               t4 = this.y;
               t5 = amount > 0;
-              t6 = t5 ? t2 : 0;
+              if (t5) {
+                if (typeof t2 !== "number")
+                  return t2.$sub();
+                t6 = t2 - 1;
+              } else
+                t6 = 0;
               if (t5)
                 t5 = 1;
               else
@@ -11443,18 +11599,36 @@
           }
       },
       occupies$2: function(x, y) {
-        var t1;
+        var t1, t2;
         if (this.direction === C.Direction_0) {
           if (y === this.y) {
             t1 = this.x;
-            t1 = x >= t1 && x < t1 + this.length;
+            if (typeof x !== "number")
+              return x.$ge();
+            if (x >= t1) {
+              t2 = this.length;
+              if (typeof t2 !== "number")
+                return H.iae(t2);
+              t2 = x < t1 + t2;
+              t1 = t2;
+            } else
+              t1 = false;
           } else
             t1 = false;
           return t1;
         } else {
           if (x === this.x) {
             t1 = this.y;
-            t1 = y >= t1 && y < t1 + this.length;
+            if (typeof y !== "number")
+              return y.$ge();
+            if (y >= t1) {
+              t2 = this.length;
+              if (typeof t2 !== "number")
+                return H.iae(t2);
+              t2 = y < t1 + t2;
+              t1 = t2;
+            } else
+              t1 = false;
           } else
             t1 = false;
           return t1;
@@ -11602,43 +11776,69 @@
       }
     },
     Game: {
-      "^": "Object;0levelNumber,0level,0destroyedCount,0destroyedNumberField,0destroyedTextField",
+      "^": "Object;0levelNumber,0level,0destroyedCount,0levelNumberField,0levelTextField,0destroyedNumberField,0destroyedTextField",
       startLevel$0: function() {
-        var t1, t2;
-        $.stage.removeChildren$0();
+        var t1, t2, t3;
         t1 = $.$get$LevelTemplate_LD_LEVELS();
         t2 = this.levelNumber;
-        if (t2 >= 9)
+        if (t2 >= 10)
           return H.ioore(t1, t2);
-        t2 = t1[t2].parse$0();
-        this.level = t2;
-        $.stage.addChild$1(t2.sprite);
-        t2 = Y.TextField$(C.JSInt_methods.toString$0(this.destroyedCount), Y.TextFormat$("Share, sans-serif", 12, 0, "left", false, 0, null, 0, false, 0, 0, 0, 4278190080, 0, 0, false, "top", 400));
-        t2.set$width(0, 50);
-        t2._x = 5;
-        t2._transformationMatrixRefresh = true;
-        t2._y = 130;
-        this.destroyedNumberField = t2;
-        $.stage.addChild$1(t2);
+        this.level = t1[t2].parse$0();
+        $.stage.removeChildren$0();
+        $.stage.addChild$1(this.level.sprite);
+        t2 = $.stage;
+        t1 = Y.TextField$(this.level.tutorialText, Y.TextFormat$("Share, sans-serif", 5, 0, "center", false, 0, null, 0, false, -3, 0, 0, 4278190080, 0, 0, false, "bottom", 400));
+        t1.set$width(0, 100);
+        t1._height = 23;
+        t3 = t1._refreshPending |= 3;
+        t1._x = 0;
+        t1._transformationMatrixRefresh = true;
+        t1._y = 3;
+        t1._wordWrap = true;
+        t1._refreshPending = t3 | 3;
+        t2.addChild$1(t1);
+        t1 = Y.TextField$(C.JSInt_methods.toString$0(this.destroyedCount), Y.TextFormat$("Share, sans-serif", 12, 0, "right", false, 0, null, 0, false, 0, 0, 0, 4278190080, 0, 0, false, "top", 400));
+        t1.set$width(0, 16);
+        t1._x = 30;
+        t1._transformationMatrixRefresh = true;
+        t1._y = 130;
+        this.destroyedNumberField = t1;
+        $.stage.addChild$1(t1);
         t1 = Y.TextField$("vehicles\ndestroyed", Y.TextFormat$("Share, sans-serif", 5, 0, "left", false, 0, null, 0, false, -4, 0, 0, 4278190080, 0, 0, false, "top", 400));
-        t1.set$width(0, 50);
-        t1._x = 12;
+        t1.set$width(0, 20);
+        t1._x = 47;
         t1._transformationMatrixRefresh = true;
         t1._y = 132;
-        this.destroyedNumberField = t1;
+        this.destroyedTextField = t1;
+        $.stage.addChild$1(t1);
+        t1 = Y.TextField$(C.JSInt_methods.toString$0(this.levelNumber), Y.TextFormat$("Share, sans-serif", 12, 0, "left", false, 0, null, 0, false, 0, 0, 0, 4278190080, 0, 0, false, "top", 400));
+        t1.set$width(0, 50);
+        t1._x = 16;
+        t1._transformationMatrixRefresh = true;
+        t1._y = 130;
+        this.levelNumberField = t1;
+        $.stage.addChild$1(t1);
+        t1 = Y.TextField$("\nlevel", Y.TextFormat$("Share, sans-serif", 5, 0, "right", false, 0, null, 0, false, -4, 0, 0, 4278190080, 0, 0, false, "top", 400));
+        t1.set$width(0, 15);
+        t1._x = 0;
+        t1._transformationMatrixRefresh = true;
+        t1._y = 132;
+        this.levelTextField = t1;
         $.stage.addChild$1(t1);
       }
     },
     Level: {
-      "^": "Object;FIELD_X,FIELD_Y,BOMB_X,BOMB_Y,width,height,0exitX,0exitY,0cars,tutorialText,0won,0sprite,0fieldSprite,0bombSprite",
+      "^": "Object;width,height,0exitX,0exitY,0cars,tutorialText,0won,0sprite,0fieldSprite,0bombSprite",
       set$cars: function(cars) {
         this.cars = H.assertSubtype(cars, "$isList", [Y.Car], "$asList");
       },
       Level$empty$3: function(width, height, tutorialText) {
-        var t1, t2, t3, t4, t5, t6, t7, t8, t9;
+        var t1, t2, t3, t4, t5, t6, t7, i, j;
         t1 = this.width;
         this.exitX = t1;
         t2 = this.height;
+        if (typeof t2 !== "number")
+          return t2.$sub();
         this.exitY = C.JSInt_methods._tdivFast$1(t2 - 1, 2);
         this.set$cars(H.setRuntimeTypeInfo([], [Y.Car]));
         this.won = false;
@@ -11648,85 +11848,115 @@
         $.DisplayObject__nextID = t5 + 1;
         t6 = [A.BitmapFilter];
         t5 = new A.Sprite(t4, true, true, false, true, "auto", true, 0, t5, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, H.setRuntimeTypeInfo([], t6), "", T.Matrix$fromIdentity(), true);
-        t4 = t1 + 2;
-        t5._scaleX = 100 / t4;
+        if (typeof t1 !== "number")
+          return t1.$add();
+        t5._scaleX = 100 / (t1 + 2);
         t5._scaleY = 100 / (t2 + 2);
         this.sprite = t5;
+        t4 = H.setRuntimeTypeInfo([], t3);
+        t5 = $.DisplayObject__nextID;
+        $.DisplayObject__nextID = t5 + 1;
+        t5 = new A.Sprite(t4, true, true, false, true, "auto", true, 0, t5, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, H.setRuntimeTypeInfo([], t6), "", T.Matrix$fromIdentity(), true);
+        this.fieldSprite = t5;
         t5.get$graphics().addCommand$1(new U.GraphicsCommandBeginPath());
-        t5 = this.sprite.get$graphics();
-        t7 = this.FIELD_X;
-        t8 = t7 - 1;
-        t9 = this.FIELD_Y;
-        t5.toString;
-        t5.addCommand$1(U.GraphicsCommandRect$(t8, t9 - 1, t4, 1));
-        t5 = this.sprite.get$graphics();
-        t5.toString;
-        t5.addCommand$1(U.GraphicsCommandRect$(t8, t9 + t2, t4, 1));
-        t4 = this.sprite.get$graphics();
-        t4.toString;
-        t4.addCommand$1(U.GraphicsCommandRect$(t8, t9, 1, t2));
-        t8 = this.sprite.get$graphics();
-        t8.toString;
-        t8.addCommand$1(U.GraphicsCommandRect$(t7 + t1, t9, 1, t2));
-        this.sprite.get$graphics().addCommand$1(new U.GraphicsCommandFillColor(4278190335));
-        t8 = H.setRuntimeTypeInfo([], t3);
-        t4 = $.DisplayObject__nextID;
-        $.DisplayObject__nextID = t4 + 1;
-        t4 = new A.Sprite(t8, true, true, false, true, "auto", true, 0, t4, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, H.setRuntimeTypeInfo([], t6), "", T.Matrix$fromIdentity(), true);
-        this.fieldSprite = t4;
-        t4.get$graphics().addCommand$1(new U.GraphicsCommandBeginPath());
-        t4 = this.fieldSprite.get$graphics();
-        t4.toString;
-        t4.addCommand$1(U.GraphicsCommandRect$(0, 0, t1, t2));
-        this.fieldSprite.get$graphics().addCommand$1(new U.GraphicsCommandFillColor(4294967295));
-        this.fieldSprite.get$graphics().addCommand$1(new U.GraphicsCommandBeginPath());
-        t2 = this.fieldSprite.get$graphics();
-        t1 = this.exitX;
-        t4 = this.exitY;
-        t2.toString;
-        t2.addCommand$1(U.GraphicsCommandRect$(t1, t4, 1, 1));
-        this.fieldSprite.get$graphics().addCommand$1(new U.GraphicsCommandFillColor(4278222848));
-        t3 = H.setRuntimeTypeInfo([], t3);
-        t4 = $.DisplayObject__nextID;
-        $.DisplayObject__nextID = t4 + 1;
-        t6 = new A.Sprite(t3, true, true, false, true, "auto", true, 0, t4, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, H.setRuntimeTypeInfo([], t6), "", T.Matrix$fromIdentity(), true);
-        this.bombSprite = t6;
-        t6.get$graphics().addCommand$1(new U.GraphicsCommandBeginPath());
-        this.bombSprite.get$graphics().addCommand$1(new U.GraphicsCommandCircle(0.5, 0.5, 0.5, false));
-        this.bombSprite.get$graphics().addCommand$1(new U.GraphicsCommandFillColor(4289309097));
-        t6 = this.fieldSprite;
-        t6._x = t7;
+        this.fieldSprite.get$graphics().addCommand$1(new U.GraphicsCommandRect(0, 0, t1, t2));
+        this.fieldSprite.get$graphics().addCommand$1(new U.GraphicsCommandFillColor(4291611852));
+        t5 = this.fieldSprite;
+        t5._x = 1;
+        t5._transformationMatrixRefresh = true;
+        t5._y = 3;
+        this.sprite.addChild$1(t5);
+        t4 = this.fieldSprite;
+        t5 = H.interceptedTypeCast($.resourceManager._getResourceValue$2("BitmapData", "exit"), "$isBitmapData");
+        t7 = $.DisplayObject__nextID;
+        $.DisplayObject__nextID = t7 + 1;
+        t7 = new A.Bitmap(t5, t7, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, H.setRuntimeTypeInfo([], t6), "", T.Matrix$fromIdentity(), true);
+        t5 = this.exitX;
+        if (typeof t5 === "number")
+          t7._x = t5;
+        t5 = this.exitY;
+        if (typeof t5 === "number")
+          t7._y = t5;
+        t7.set$width(0, 1);
+        t7.set$height(0, 1);
+        t4.addChild$1(t7);
+        for (t1 = 1 + t1, i = 0; i <= t1; ++i) {
+          t4 = this.sprite;
+          t5 = H.interceptedTypeCast($.resourceManager._getResourceValue$2("BitmapData", "border"), "$isBitmapData");
+          t7 = $.DisplayObject__nextID;
+          $.DisplayObject__nextID = t7 + 1;
+          t7 = new A.Bitmap(t5, t7, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, H.setRuntimeTypeInfo([], t6), "", T.Matrix$fromIdentity(), true);
+          t7._x = i;
+          t7._y = 2;
+          t7.set$width(0, 1);
+          t7.set$height(0, 1);
+          t4.addChild$1(t7);
+          t4 = this.sprite;
+          t5 = H.interceptedTypeCast($.resourceManager._getResourceValue$2("BitmapData", "border"), "$isBitmapData");
+          t7 = $.DisplayObject__nextID;
+          $.DisplayObject__nextID = t7 + 1;
+          t7 = new A.Bitmap(t5, t7, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, H.setRuntimeTypeInfo([], t6), "", T.Matrix$fromIdentity(), true);
+          t7._x = i;
+          t7._y = 3 + t2;
+          t7.set$width(0, 1);
+          t7.set$height(0, 1);
+          t4.addChild$1(t7);
+        }
+        for (t2 = 3 + t2, j = 3; j < t2; ++j) {
+          t4 = this.sprite;
+          t5 = H.interceptedTypeCast($.resourceManager._getResourceValue$2("BitmapData", "border"), "$isBitmapData");
+          t7 = $.DisplayObject__nextID;
+          $.DisplayObject__nextID = t7 + 1;
+          t7 = new A.Bitmap(t5, t7, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, H.setRuntimeTypeInfo([], t6), "", T.Matrix$fromIdentity(), true);
+          t7._y = j;
+          t7.set$width(0, 1);
+          t7.set$height(0, 1);
+          t4.addChild$1(t7);
+          t4 = this.exitY;
+          if (typeof t4 !== "number")
+            return H.iae(t4);
+          if (j !== 3 + t4) {
+            t4 = this.sprite;
+            t5 = H.interceptedTypeCast($.resourceManager._getResourceValue$2("BitmapData", "border"), "$isBitmapData");
+            t7 = $.DisplayObject__nextID;
+            $.DisplayObject__nextID = t7 + 1;
+            t7 = new A.Bitmap(t5, t7, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, H.setRuntimeTypeInfo([], t6), "", T.Matrix$fromIdentity(), true);
+            t7._x = t1;
+            t7._y = j;
+            t7.set$width(0, 1);
+            t7.set$height(0, 1);
+            t4.addChild$1(t7);
+          }
+        }
+        t1 = H.setRuntimeTypeInfo([], t3);
+        t2 = $.DisplayObject__nextID;
+        $.DisplayObject__nextID = t2 + 1;
+        t2 = new A.Sprite(t1, true, true, false, true, "auto", true, 0, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, H.setRuntimeTypeInfo([], t6), "", T.Matrix$fromIdentity(), true);
+        this.bombSprite = t2;
+        t1 = H.interceptedTypeCast($.resourceManager._getResourceValue$2("BitmapData", "grenade"), "$isBitmapData");
+        t3 = $.DisplayObject__nextID;
+        $.DisplayObject__nextID = t3 + 1;
+        t6 = new A.Bitmap(t1, t3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, H.setRuntimeTypeInfo([], t6), "", T.Matrix$fromIdentity(), true);
+        t6.set$width(0, 1);
+        t6.set$height(0, 1);
+        t2.addChild$1(t6);
+        t6 = this.bombSprite;
+        t6._pivotY = 0.5;
         t6._transformationMatrixRefresh = true;
-        t6._y = t9;
-        this.sprite.addChild$1(t6);
-        t1 = this.bombSprite;
-        t1._pivotY = 0.5;
-        t1._transformationMatrixRefresh = true;
-        t1._pivotX = 0.5;
-        t1._x = this.BOMB_X;
-        t1._y = this.BOMB_Y;
-        t2 = R.MouseEvent;
-        t1 = t1.on$1$1(0, "mouseDown", t2);
-        t1._subscribe$3(H.functionTypeCheck(new Y.Level$empty_closure(this), {func: 1, ret: -1, args: [H.getTypeArgumentByIndex(t1, 0)]}), false, 0);
-        t1 = R.TouchEvent;
-        t3 = this.bombSprite.on$1$1(0, "touchBegin", t1);
-        t3._subscribe$3(H.functionTypeCheck(new Y.Level$empty_closure0(this), {func: 1, ret: -1, args: [H.getTypeArgumentByIndex(t3, 0)]}), false, 0);
-        t2 = this.bombSprite.on$1$1(0, "mouseUp", t2);
-        t2._subscribe$3(H.functionTypeCheck(new Y.Level$empty_closure1(this), {func: 1, ret: -1, args: [H.getTypeArgumentByIndex(t2, 0)]}), false, 0);
-        t1 = this.bombSprite.on$1$1(0, "touchEnd", t1);
-        t1._subscribe$3(H.functionTypeCheck(new Y.Level$empty_closure2(this), {func: 1, ret: -1, args: [H.getTypeArgumentByIndex(t1, 0)]}), false, 0);
+        t6._pivotX = 0.5;
+        t6._x = 7;
+        t6._y = 11;
+        t1 = R.MouseEvent;
+        t6 = t6.on$1$1(0, "mouseDown", t1);
+        t6._subscribe$3(H.functionTypeCheck(new Y.Level$empty_closure(this), {func: 1, ret: -1, args: [H.getTypeArgumentByIndex(t6, 0)]}), false, 0);
+        t6 = R.TouchEvent;
+        t2 = this.bombSprite.on$1$1(0, "touchBegin", t6);
+        t2._subscribe$3(H.functionTypeCheck(new Y.Level$empty_closure0(this), {func: 1, ret: -1, args: [H.getTypeArgumentByIndex(t2, 0)]}), false, 0);
+        t1 = this.bombSprite.on$1$1(0, "mouseUp", t1);
+        t1._subscribe$3(H.functionTypeCheck(new Y.Level$empty_closure1(this), {func: 1, ret: -1, args: [H.getTypeArgumentByIndex(t1, 0)]}), false, 0);
+        t6 = this.bombSprite.on$1$1(0, "touchEnd", t6);
+        t6._subscribe$3(H.functionTypeCheck(new Y.Level$empty_closure2(this), {func: 1, ret: -1, args: [H.getTypeArgumentByIndex(t6, 0)]}), false, 0);
         this.sprite.addChild$1(this.bombSprite);
-        t1 = $.stage;
-        t2 = Y.TextField$(this.tutorialText, Y.TextFormat$("Share, sans-serif", 5, 0, "center", false, 0, null, 0, false, -3, 0, 0, 4278190080, 0, 0, false, "bottom", 400));
-        t2.set$width(0, 100);
-        t2._height = 23;
-        t3 = t2._refreshPending |= 3;
-        t2._x = 0;
-        t2._transformationMatrixRefresh = true;
-        t2._y = 3;
-        t2._wordWrap = true;
-        t2._refreshPending = t3 | 3;
-        t1.addChild$1(t2);
       },
       explodeCar$1: function(car) {
         var t1, t2, t3, t4;
@@ -11737,11 +11967,29 @@
         t4._tween._createTweenProperty$2(t4, 9)._targetValue = 0;
         t3._onComplete = t1;
         t2.add$1(0, t3);
+        t3 = $.game;
+        t2 = ++t3.destroyedCount;
+        t3.destroyedNumberField.set$text(0, C.JSInt_methods.toString$0(t2));
       },
       isOccupied$2: function(x, y) {
         var t1;
         if (!(x === this.exitX && y === this.exitY))
-          t1 = x < 0 || x >= this.width || y < 0 || y >= this.height;
+          if (x >= 0) {
+            t1 = this.width;
+            if (typeof t1 !== "number")
+              return H.iae(t1);
+            if (x < t1)
+              if (y >= 0) {
+                t1 = this.height;
+                if (typeof t1 !== "number")
+                  return H.iae(t1);
+                t1 = y >= t1;
+              } else
+                t1 = true;
+            else
+              t1 = true;
+          } else
+            t1 = true;
         else
           t1 = false;
         if (t1)
@@ -11764,7 +12012,7 @@
         t1 = $.game;
         t2 = ++t1.levelNumber;
         $.$get$LevelTemplate_LD_LEVELS();
-        if (t2 >= 9)
+        if (t2 >= 10)
           P.print("game over");
         else
           t1.startLevel$0();
@@ -11797,9 +12045,9 @@
         } else {
           t1 = t1.juggler.addTween$3(t2, 0.2, K.animation_Transition_easeInOutQuadratic$closure());
           t2 = t1.get$animate(t1);
-          t2._tween._createTweenProperty$2(t2, 0)._targetValue = this.BOMB_X;
+          t2._tween._createTweenProperty$2(t2, 0)._targetValue = 7;
           t2 = t1.get$animate(t1);
-          t2._tween._createTweenProperty$2(t2, 1)._targetValue = this.BOMB_Y;
+          t2._tween._createTweenProperty$2(t2, 1)._targetValue = 11;
           t2 = t1.get$animate(t1);
           t2._tween._createTweenProperty$2(t2, 4)._targetValue = 1;
           t1 = t1.get$animate(t1);
@@ -11813,7 +12061,7 @@
       },
       static: {
         Level$empty: function(width, height, tutorialText) {
-          var t1 = new Y.Level(1, 3, 7, 11, width, height, tutorialText);
+          var t1 = new Y.Level(width, height, tutorialText);
           t1.Level$empty$3(width, height, tutorialText);
           return t1;
         }
@@ -11865,13 +12113,13 @@
         var t1, t2;
         t1 = this.$this;
         t1.explodeCar$1(this.dropCar);
-        t2 = t1.bombSprite;
-        t2._x = t1.BOMB_X;
-        t2._transformationMatrixRefresh = true;
-        t2._y = t1.BOMB_Y;
-        t2._scaleY = 0;
-        t2._scaleX = 0;
-        t1 = $.stage.juggler.addTween$3(t2, 0.2, K.animation_Transition_easeInOutQuadratic$closure());
+        t1 = t1.bombSprite;
+        t1._x = 7;
+        t1._transformationMatrixRefresh = true;
+        t1._y = 11;
+        t1._scaleY = 0;
+        t1._scaleX = 0;
+        t1 = $.stage.juggler.addTween$3(t1, 0.2, K.animation_Transition_easeInOutQuadratic$closure());
         t2 = t1.get$animate(t1);
         t2._tween._createTweenProperty$2(t2, 4)._targetValue = 1;
         t1 = t1.get$animate(t1);
@@ -12318,6 +12566,8 @@
   $.Mouse__cursorHidden = false;
   $.Mouse__cursorName = "auto";
   $.stage = null;
+  $.resourceManager = null;
+  $.random = null;
   $.game = null;
   $ = null;
   init.isHunkLoaded = function(hunkHash) {
@@ -12441,12 +12691,12 @@
     t1.toString;
     return new P._BroadcastStream(t1, [H.getTypeArgumentByIndex(t1, 0)]);
   }, "Mouse_onCursorChanged", "LevelTemplate_LD_LEVELS", "$get$LevelTemplate_LD_LEVELS", function() {
-    return H.setRuntimeTypeInfo([Y.LevelTemplate$("<#     <.#^  <$ . ^^  #^.#<# ##  <# ", 6, 6, "Let's be honest, you probably already know how this works. Get your red car out of the traffic jam."), Y.LevelTemplate$("  <# ^ <.# .<$ ^ #   #  <#   ^  <# #", 6, 6, "But, as they say: To succeed in life, you sometimes have to drop a grenade on a truck."), Y.LevelTemplate$("   ^<#<# . ^ <$# #   ^ ^ ^ # . #<.##", 6, 6, "Looks like you got the hang of this. Don't worry, it'll get more challenging as we go along."), Y.LevelTemplate$("<# ^ ^ <#. #<$^#^ ^ # . .<# # #<.#<#", 6, 6, "You only need one grenade per level to solve it. If you're stuck, you can use more (at the cost of human lives, of course)."), Y.LevelTemplate$("^<#<.## ^^<#<$## ^  ^<#.<#.  #  #<.#", 6, 6, ""), Y.LevelTemplate$("^<# ^^# ^ #.<$.  #  #<.#    ^ <.# # ", 6, 6, ""), Y.LevelTemplate$("^^<.# ##^ ^ <$#^.^<.####^    ^#<#<##", 6, 6, ""), Y.LevelTemplate$(" <#<# <#<#^^^^<$....^^######<#<#<#<#", 6, 6, ""), Y.LevelTemplate$("  ^<.#^ #^  #<$# ^<#<#^#<#<#.^<.# ##", 6, 6, "")], [Y.LevelTemplate]);
+    return H.setRuntimeTypeInfo([Y.LevelTemplate$("<#     <.#^  <$ . ^^  #^.#<# ##  <# ", 6, 6, "Let's be honest, you probably already know how this works. Get your red car out of the traffic jam."), Y.LevelTemplate$("  <# ^ <.# .<$ ^ #   #  <#   ^  <# #", 6, 6, "But, as they say: To succeed in life, you sometimes have to drop a grenade on a truck."), Y.LevelTemplate$("   ^<#<# . ^ <$# #   ^ ^ ^ # . #<.##", 6, 6, "You only need one grenade per level to solve it. If you're stuck, you can use more (at the cost of human lives, of course)."), Y.LevelTemplate$("<# ^ ^ <#. #<$^#^ ^ # . .<# # #<.#<#", 6, 6, "Looks like you got the hang of this. Don't worry, it'll get more challenging as we go along."), Y.LevelTemplate$("^<# ^^# ^ #.<$.  #  #<.#    ^ <.# # ", 6, 6, ""), Y.LevelTemplate$("^<#<.## ^^<#<$## ^  ^<#.<#.  #  #<.#", 6, 6, ""), Y.LevelTemplate$("^^<.# ##^ ^ <$#^.^<.####^    ^#<#<##", 6, 6, ""), Y.LevelTemplate$("  ^<.#^ #^  #<$# ^<#<#^#<#<#.^<.# ##", 6, 6, ""), Y.LevelTemplate$(" <#<# <#<#^^^^<$....^^######<#<#<#<#", 6, 6, ""), Y.LevelTemplate$("^<#<.##  ^ ^<$ #^.<.#^##  ^#<#<##<# ", 6, 6, "")], [Y.LevelTemplate]);
   }, "LevelTemplate_LD_LEVELS"]);
   Isolate = Isolate.$finishIsolateConstructor(Isolate);
   $ = new Isolate();
   init.metadata = [];
-  init.types = [{func: 1, ret: P.Null}, {func: 1, ret: -1}, {func: 1, ret: -1, args: [R.MouseEvent]}, {func: 1, ret: -1, args: [R.TouchEvent]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.num, args: [P.num]}, {func: 1, args: [,]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: P.bool, args: [A._Drag]}, {func: 1, ret: -1, args: [A._Drag]}, {func: 1, ret: -1, args: [P.ContextEvent]}, {func: 1, ret: -1, args: [W.Event0]}, {func: 1, ret: P.bool, args: [O.ResourceManagerResource]}, {func: 1, ret: P.Null, args: [,], opt: [,]}, {func: 1, args: [W.Event0]}, {func: 1, ret: A.BitmapData, args: [W.ImageElement]}, {func: 1, ret: P.num, args: [P.num, P.num]}, {func: 1, ret: P.bool, args: [A.Stage]}, {func: 1, ret: -1, args: [A.Stage]}, {func: 1, ret: -1, args: [W.MouseEvent0]}, {func: 1, ret: -1, args: [W.WheelEvent]}, {func: 1, ret: -1, args: [W.TouchEvent0]}, {func: 1, ret: -1, args: [W.KeyboardEvent0]}, {func: 1, ret: -1, args: [P.String]}, {func: 1, args: [, P.String]}, {func: 1, ret: -1, args: [,]}, {func: 1, ret: P.Null, args: [, P.StackTrace]}, {func: 1, ret: -1, args: [A.BitmapData]}, {func: 1, ret: P.Null, args: [P.int,,]}, {func: 1, ret: P.Null, args: [P.num]}, {func: 1, ret: -1, args: [P.num]}, {func: 1, ret: P.Null, args: [{func: 1, ret: -1}]}, {func: 1, ret: [P.Future,,], args: [O.ResourceManagerResource]}, {func: 1, args: [P.String]}, {func: 1, ret: Y._FontStyleMetrics}, {func: 1, ret: -1, args: [R.KeyboardEvent]}, {func: 1, ret: -1, args: [R.TextEvent]}, {func: 1, ret: -1, opt: [P.Object]}, {func: 1, ret: P.int}, {func: 1, ret: P.num}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, ret: A._TouchPoint}];
+  init.types = [{func: 1, ret: P.Null}, {func: 1, ret: -1}, {func: 1, ret: -1, args: [R.MouseEvent]}, {func: 1, ret: -1, args: [R.TouchEvent]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.num, args: [P.num]}, {func: 1, ret: P.bool, args: [O.ResourceManagerResource]}, {func: 1, args: [,]}, {func: 1, ret: P.bool, args: [A._Drag]}, {func: 1, ret: -1, args: [A._Drag]}, {func: 1, ret: -1, args: [P.ContextEvent]}, {func: 1, ret: -1, args: [W.Event0]}, {func: 1, ret: P.Null, args: [,], opt: [,]}, {func: 1, args: [W.Event0]}, {func: 1, ret: A.BitmapData, args: [W.ImageElement]}, {func: 1, ret: P.num, args: [P.num, P.num]}, {func: 1, ret: P.bool, args: [A.Stage]}, {func: 1, ret: -1, args: [A.Stage]}, {func: 1, ret: -1, args: [W.MouseEvent0]}, {func: 1, ret: -1, args: [W.WheelEvent]}, {func: 1, ret: -1, args: [W.TouchEvent0]}, {func: 1, ret: -1, args: [W.KeyboardEvent0]}, {func: 1, ret: -1, args: [P.String]}, {func: 1, args: [, P.String]}, {func: 1, ret: -1, args: [,]}, {func: 1, ret: P.Null, args: [, P.StackTrace]}, {func: 1, ret: -1, args: [A.BitmapData]}, {func: 1, ret: P.Null, args: [P.int,,]}, {func: 1, ret: P.Null, args: [P.num]}, {func: 1, ret: -1, args: [P.num]}, {func: 1, ret: P.Null, args: [{func: 1, ret: -1}]}, {func: 1, ret: [P.Future,,], args: [O.ResourceManagerResource]}, {func: 1, args: [P.String]}, {func: 1, ret: Y._FontStyleMetrics}, {func: 1, ret: -1, args: [R.KeyboardEvent]}, {func: 1, ret: -1, args: [R.TextEvent]}, {func: 1, ret: -1, opt: [P.Object]}, {func: 1, ret: P.int}, {func: 1, ret: P.num}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, ret: A._TouchPoint}];
   function convertToFastObject(properties) {
     function MyClass() {
     }
